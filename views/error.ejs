@@ -1,0 +1,25 @@
+<%- include('partials/header.ejs') %>
+    <main class="p-404">
+        <section class="message">
+            <div>
+                <figure>
+                    <img src="/imgs/error.png" alt="Not found">
+                </figure>
+                <p>
+                    <%= error %>
+                </p>
+                <div class="go-home">
+                    <a href="/">
+                        <div>
+                            <iconify-icon icon="octicon:home"></iconify-icon>
+                        </div>
+                        <span>
+                            Volver al inicio
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_home.ejs') %>

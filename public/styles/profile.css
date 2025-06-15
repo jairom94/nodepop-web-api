@@ -1,0 +1,81 @@
+main.profile {
+    min-height: 100vh;    
+    max-width: 70vw;
+    margin: 0 auto;    
+    padding: 60px 0;
+    > section.hero-profile{
+        padding-top: 60px;
+        > div:nth-child(1){
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+            align-items: center;
+            font-family: 'Monda',Arial, Helvetica, sans-serif;  
+            gap: 2rem;
+            > div:nth-child(1) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 6rem;
+                background-color: var(--option-bg);
+                padding: 1rem;
+                border-radius: 50%;
+                box-shadow: 2px 2px 10px black;
+            }
+            > div:nth-child(2){
+                display: flex;
+                flex-direction: column;                
+                > p {
+                    font-size: 3rem;
+                    /* padding: 1rem; */
+                }
+                > p:nth-child(2){
+                    font-size: 1rem;
+                    letter-spacing: 1.2;
+                }
+            }
+        }
+
+    }
+    > section.dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        > article:nth-child(1){
+            font-size: 2rem;
+            font-family: 'Monda',Arial, Helvetica, sans-serif;              
+            padding-top: 2rem;
+        }
+        > article:nth-child(2){
+            > table {                
+                width: 100%;
+                border-collapse: collapse;
+                margin: 0 auto;
+                font-family: 'Monda',Arial, Helvetica, sans-serif;  
+                > thead {
+                    background-color: var(--bg-black-primary);
+                    > tr {
+                        > th {
+                            padding: .5rem 0;
+                            color: var(--option-bg);
+                        }
+                    }
+                }
+                > tbody {
+                    > tr {
+                        > td {
+                            padding: .5rem 0;
+                            text-align: center;
+                        }
+                        &:hover {
+                            background-color: #ddd; /* Efecto hover */
+                        }
+                    }
+                }
+                th, td {
+                    border:none;
+                }
+            }
+        }
+    }
+}

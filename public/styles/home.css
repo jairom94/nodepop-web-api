@@ -1,0 +1,138 @@
+main.home {
+    flex-grow: 1;
+    padding-top: 60px;
+    > section.hero{        
+        background-color: var(--color-text-secondary);
+        > div.bg-hero{
+            display: flex;
+            flex-direction: column;
+            > aside {
+                min-height: 200px;            
+                font-family: 'Monda',Arial, Helvetica, sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: .3rem;
+                > h2 {
+                    text-align: center;
+                }
+                > a {
+                    /* display: inline-block; */
+                    padding: .7rem 1.5rem;
+                    border-radius: 30px;
+                    background-color: var(--bg-black-primary);
+                    color: var(--option-bg);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .3rem;
+                    transition: all .3s ease;
+                    > div:nth-child(1) {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    &:hover {
+                        background-color: var(--bg-black-light);
+                    }
+                }
+            }
+            > figure {                        
+                height: 300px;            
+                > img.img-hero {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center center;               
+                }
+            }
+        }
+        
+    }
+    > section.detail {
+        > article {            
+            padding: 3rem .3rem;
+            font-family: 'Monda',Arial, Helvetica, sans-serif;            
+            > h2 {
+                padding-bottom: 1rem;
+            }
+            > ul {
+                background-color: var(--option-bg);
+                display: grid;
+                grid-template-columns: repeat(2,minmax(100px,200px));
+                gap: .3rem;
+                padding: .75rem;
+                border-radius: .5rem;
+                > li{
+                    height: 200px;
+                    padding: .5rem;
+                    border-radius: .3rem;
+                    background-color: var(--color-text-secondary);
+                    > figure{                                                
+                        > div {
+                            img {
+                                border-radius: .3rem;
+                                width: 100%;
+                                height: 150px;
+                                object-fit: cover;
+                                object-position: center center;
+                            }
+                        }
+                        > figcaption {
+                            >p:nth-child(1){
+                                padding-top: .8rem;
+                            }
+                            > p:nth-child(2){
+                                font-size: .7rem;
+                                letter-spacing: 1.2;
+                                opacity: .6;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width > 768px){
+    main.home {
+        padding-top: 120px;  
+
+        > section.hero {
+            > div.bg-hero{
+                max-width: 70vw;
+                margin: 0 auto;
+                flex-direction: row;
+                > aside {
+                    /* background-color: yellowgreen; */
+                    padding-right: 2rem;
+                    padding-bottom: 2rem;
+                    > h2 {
+                        font-size: 2.5rem;
+                        padding-bottom: 2rem;
+                        flex-grow: 1;
+                        /* background-color: yellowgreen; */
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        /* text-align: left; */
+                    }
+                    
+
+                }
+            }
+            
+        }
+        > section.detail {
+            max-width: 700px;
+            margin: 0 auto;
+            > article {
+                > ul {
+                    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+                }
+            }
+        }
+    }
+}

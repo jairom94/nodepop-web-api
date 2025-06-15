@@ -1,0 +1,183 @@
+<!-- JS de noUiSlider -->
+<script src="/scripts/nouislider.js"></script>
+<script src="/scripts/wNumb.js"></script>
+<script>
+    const refreshImage = async (htmlImg) => {
+        try {
+            const respuesta = await fetch(htmlImg.src);
+            const blob = await respuesta.blob();
+            const urlImagen = URL.createObjectURL(blob);
+            htmlImg.src = urlImagen;
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    function resetProduct(el,product_id) {
+            // console.log(product_id)
+            const products = <%- JSON.stringify(pagination.products) %>;            
+            const product = products.find(p => p._id === product_id);            
+            const $imgEdit = document.querySelector(`#image-generated-edit-${product_id}`);
+            $imgEdit.src = product.image;
+            const $nameEdit = document.querySelector(`#name-edit-${product_id}`);
+            $nameEdit.value = product.name;
+            const $imageEdit = document.querySelector(`#image-edit-${product_id}`);
+            $imageEdit.value = product.image;
+            const $priceEdit = document.querySelector(`#price-edit-${product_id}`);
+            $priceEdit.value = product.price;
+            const $contTags = document.querySelector(`#tags-edit-${product_id}`);
+            const tags = <%- JSON.stringify(tags) %>;
+            $contTags.innerHTML = tags.map(t => (
+                `
+                    <label>
+                        <input type='checkbox' name='tags' value='${t.name}'
+                        ${product.tags.map(tg=>tg.name).includes(t.name) ? 'checked' : ''}>
+                        ${t.name}
+                    </label>
+                `
+            )).join('');
+            el.closest('dialog').close();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const $resetBtnAdd = document.querySelector('#btnResetAdd');
+        $resetBtnAdd.addEventListener('click',()=>{
+            const $imgToGen = document.querySelector('#image-generated');
+            $imgToGen.style.display = 'none';
+            $imgToGen.src = '';
+            
+        });
+        const imgs = document.querySelectorAll('.img-p-off')
+        imgs.forEach((img, index) => {
+            refreshImage(img)
+                .then(res => res)
+        });
+        const genNewImage = ($img,$inputToImage) => {
+            // const $img = document.querySelector('#image-generated');
+            const ID_TO_GEN_IMAGE = Math.floor(Math.random() * 100) + 100;
+            const URL_IMAGE = `https://picsum.photos/id/${ID_TO_GEN_IMAGE}/600/400`;
+            // const $inputToImage = document.querySelector('#image');
+            $img.src = URL_IMAGE;
+            $img.style.display = 'block';
+            $inputToImage.value = URL_IMAGE;
+        }
+        const $btnGen = document.querySelector('#show-image');
+        $btnGen.addEventListener('click', () => {
+            const $imgToAdd = document.querySelector('#image-generated');
+            const $inputToImageAdd = document.querySelector('#image');
+            genNewImage($imgToAdd,$inputToImageAdd)
+            // $inputImage.setAttribute('disabled',true)
+
+        });
+
+        const $btnGenToEdit = document.querySelector('#show-image-edit');
+        $btnGenToEdit.addEventListener('click', () => {
+            const $imgToEdit = document.querySelector('#image-generated-edit');
+            const $inputToImageEdit = document.querySelector('#image-edit');
+            genNewImage($imgToEdit,$inputToImageEdit)
+            // $inputImage.setAttribute('disabled',true)
+        });
+        
+        const $tagsCont = document.querySelector('.f-tags');
+        // console.log($tagsCont.firstChild);
+        const tagsFilter = <%- JSON.stringify(tagsFilter) %>;
+        console.log(tagsFilter);
+        
+        Array.from($tagsCont.children).forEach( label =>{
+            const value = label.firstElementChild.getAttribute('value');
+            if (tagsFilter.includes(value)) {                
+                label.firstElementChild.setAttribute('checked','')
+            }
+            
+        })
+        
+        
+        
+
+
+        const stepsSlider = document.querySelector("#steps-slider");
+        const input0 = document.querySelector("#price-min");
+        const input1 = document.querySelector("#price-max");
+        const inputs = [input0, input1];
+        const rangePrice = <%- JSON.stringify(rangePrice) %>;
+        const startRange = <%- JSON.stringify(startRange) %>;
+        noUiSlider.create(stepsSlider, {
+            start: [startRange.startMin,startRange.startMax],
+            connect: true,
+            tooltips: [true, wNumb({ decimals: 1 })],
+            range: {
+                'min': [rangePrice.min],                
+                'max': [rangePrice.max]
+            }
+        });
+
+        stepsSlider.noUiSlider.on('update', function (values, handle) {
+            inputs[handle].value = values[handle];
+        });
+        
+        inputs.forEach(function (input, handle) {
+
+            input.addEventListener('change', function () {
+                stepsSlider.noUiSlider.setHandle(handle, this.value);
+            });
+
+            input.addEventListener('keydown', function (e) {
+
+                var values = stepsSlider.noUiSlider.get();
+                var value = Number(values[handle]);
+
+                // [[handle0_down, handle0_up], [handle1_down, handle1_up]]
+                var steps = stepsSlider.noUiSlider.steps();
+
+                // [down, up]
+                var step = steps[handle];
+
+                var position;
+
+                // 13 is enter,
+                // 38 is key up,
+                // 40 is key down.
+                switch (e.which) {
+
+                    case 13:
+                        stepsSlider.noUiSlider.setHandle(handle, this.value);
+                        break;
+
+                    case 38:
+
+                        // Get step to go increase slider value (up)
+                        position = step[1];
+
+                        // false = no step is set
+                        if (position === false) {
+                            position = 1;
+                        }
+
+                        // null = edge of slider
+                        if (position !== null) {
+                            stepsSlider.noUiSlider.setHandle(handle, value + position);
+                        }
+
+                        break;
+
+                    case 40:
+
+                        position = step[0];
+
+                        if (position === false) {
+                            position = 1;
+                        }
+
+                        if (position !== null) {
+                            stepsSlider.noUiSlider.setHandle(handle, value - position);
+                        }
+
+                        break;
+                }
+            });
+        });
+    })
+</script>
+</body>
+
+</html>

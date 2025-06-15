@@ -1,0 +1,34 @@
+    <%- include('partials/header.ejs') %>
+    <div class="login">
+        <div class="bg-login"></div>
+        <div class="overlay"></div>
+        <main class="container-login">        
+            <div class="cont-form-login">
+                <form method="post">
+                    <div class="cont-icon">
+                        <iconify-icon icon="mynaui:user-square-solid"></iconify-icon>
+                    </div>
+                    <h1>Login</h1>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email"
+                        placeholder="example@mail.com"
+                        autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password"
+                        placeholder="write your password...">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Enter">
+                    <div class="to-register">
+                        <p>
+                            ¿No tienes cuenta? <a href="/register">Crear cuenta</a> 
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_home.ejs') %>

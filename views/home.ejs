@@ -1,0 +1,70 @@
+<%- include('partials/header.ejs') %>
+    <main class="home">
+        <section class="hero">
+            <div class="bg-hero">
+                <aside>
+                    <h2>Compra y vende artículos de segunda mano.</h2>
+                    <a href="#">
+                        <div>
+                            <iconify-icon icon="octicon:plus-circle-24"></iconify-icon>
+                        </div>
+                        <span>
+                            Vender Ahora
+                        </span>
+                    </a>
+                </aside>
+                <figure>
+                    <!-- <p>Hola mundo</p> -->
+                    <img class="img-hero" src="../imgs/hero-slide-1.avif" alt="Imagen hero">
+                </figure>
+            </div>
+        </section>
+        <section class="detail">
+            <article>
+                <h2>Lo que necesitas para tu Motor</h2>
+                <ul>
+                    <% productsMotor.forEach(p => { %>
+                        <li>
+                            <figure>
+                                <div>
+                                    <img src="<%= p.image %>" alt="<%= p.name %>">
+                                </div>
+                                <figcaption>
+                                    <p>
+                                        <%= p.name %>
+                                    </p>
+                                    <p>
+                                        +5000 anuncios
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    <% }) %>
+                </ul>
+            </article>
+            <article>
+                <h2>Tu estilo de vida</h2>
+                <ul>
+                    <% productsLifestyle.forEach(p => { %>
+                        <li>
+                            <figure>
+                                <div>
+                                    <img src="<%= p.image %>" alt="<%= p.name %>">
+                                </div>
+                                <figcaption>
+                                    <p>
+                                        <%= p.name %>
+                                    </p>
+                                    <p>
+                                        +500 anuncios
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    <% }) %>
+                </ul>
+            </article>
+        </section>
+    </main>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_home.ejs') %>

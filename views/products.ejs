@@ -1,0 +1,150 @@
+<%- include('partials/header.ejs') %>
+    <main class="cont-products-n">
+        <% if (error_messages && error_messages.length> 0) { %>
+            <script>                
+                Swal.fire({
+                    icon: 'error',
+                    title: `Error`,
+                    html: `
+                            <h4>Errores encontrados:</h4>
+                            <ul>
+                            <% error_messages.forEach(msg => { %>
+                                <li><%= msg %></li>
+                            <% }) %>
+                            </ul>
+                        `,
+                    showConfirmButton: true,
+                    confirmButtonColor: '#dc3545',
+                    backdrop: 'rgba(0,0,0,0.5)'
+                });
+            </script>
+            <% } %>
+                <section class="add-product">
+                    <button id="btn-open-modal"
+                        onclick="document.querySelector('#modal-add-product').showModal()">
+                        ADD PRODUCT
+                    </button>
+                    <!-- <button popovertarget="modal-add-product" id="btn-open-modal">ADD PRODUCT</button> -->
+                    <dialog class="modal-add-product" id="modal-add-product">
+                        <%- include('partials/frmAddProduct.ejs') %>
+                        <!-- <div class="cont-form">
+                        </div> -->
+                    </dialog>
+                </section>
+                <section class="filter-products">
+                    <input type="checkbox" name="filter-check" id="filter-check">
+                    <label for="filter-check">
+                        <span>FILTER BY</span>
+                    </label>
+                    <div class="cont-frm-filter">
+                        <form class="frm-filter" action="/products" method="get">
+                            <fieldset>
+                                <legend>Options</legend>
+                                <div>
+                                    <label for="f-name-product">Search Product</label>
+                                    <input type="text" name="name" id="f-name-product" placeholder="write name product"
+                                    value="<%= nameFilter %>">
+                                </div>
+                                <div>
+                                    <legend>Range Price</legend>
+                                    <fieldset class="range">
+                                        <div id="steps-slider"></div>
+                                        <input type="hidden" id="price-min" name="min" value="<%= rangePrice.min %>">
+                                        <input type="hidden" id="price-max" name="max" value="<%= rangePrice.max %>">
+                                    </fieldset>
+
+                                </div>
+                                <div>
+                                    <legend>Tags</legend>
+                                    <fieldset class="f-tags">
+                                        <% tags.forEach(tag=> { %>
+                                            <label>
+                                                <input type="checkbox" name="tags" value="<%= tag.name %>">
+                                                <%= tag.name %>
+                                            </label>
+                                            <% }) %>
+                                    </fieldset>
+                                </div>
+                                <input type="submit" value="Filtrar">
+                                <a href="/products" class="">Limpiar Filtros</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </section>
+                <section class="products">
+                    <h2>List products</h2>
+                    <% if (pagination.products.length> 0) { %>
+                        <ul class="list-products">
+                            <% pagination.products.forEach(product=> { %>
+                                <li>
+                                    <figure>
+                                        <div class="cont-img-product">
+                                            <img class="img-p" src="<%= product.image %> " alt="<%= product.name %>">
+                                            <div class="overlay">
+                                                <div class="actions">                                                    
+                                                    <button class="btn btn-danger"
+                                                        onclick="document.querySelector('#modal-delete-<%= product._id %>').showModal()">
+                                                        Delete
+                                                    </button>
+                                                    <button class="btn btn-secondary"
+                                                        onclick="document.querySelector('#modal-update-<%= product._id %>').showModal()">
+                                                        Edit
+                                                    </button>
+                                                    <!-- <button class="btn btn-secondary">Edit</button>                                                     -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <figcaption>
+                                            <div class="name-product">
+                                                <a href="/products/<%= product._id %>">
+                                                    <%= product.name %>
+                                                </a>
+                                            </div>
+                                            <div class="detail">
+                                                <div class="price">
+                                                    <span>
+                                                        $ <%= product.price %>
+                                                    </span>
+                                                </div>
+                                                <div class="tags">
+                                                    <% product.tags.forEach(tag=> { %>
+                                                        <span>
+                                                            <%= tag.name %>
+                                                        </span>
+                                                        <% }); %>
+                                                </div>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                    <dialog class="modal-delete" id="modal-delete-<%= product._id %>">
+                                        <%- include('partials/frmDeleteProduct.ejs',{product}) %>
+                                    </dialog>
+                                    <dialog class="modal-update" id="modal-update-<%= product._id %>">
+                                        <%- include('partials/frmEditProduct.ejs',{product,tags}) %>
+                                    </dialog>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% }else{ %>
+                            <p>
+                                No se han encontrado productos.
+                            </p>
+                            <% } %>
+                                <div class="pagination">
+                                    <% if (pagination.page> 1) { %>
+                                        <a href="/products?page=<%= pagination.page-1 %><%= pagination.prevPage %>">Prev</a>
+                                    <% } %>
+                                    <% for( let i=1; i <=pagination.totalPages; i++ ) { %>
+                                        <a href="/products?page=<%= i %><%= pagination.nextPage %>"
+                                            class="page-item <%= pagination.page === i ? 'current-page' : '' %>">
+                                            <%= i %>
+                                        </a>
+                                    <% } %>
+                                    <% if (pagination.page < pagination.totalPages) { %>
+                                        <a href="/products?page=<%= pagination.page+1 %><%= pagination.nextPage %>">Next</a>
+                                    <% } %>
+                                </div>
+                </section>
+    </main>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_products.ejs',{}) %>

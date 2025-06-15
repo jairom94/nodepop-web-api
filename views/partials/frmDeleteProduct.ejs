@@ -1,0 +1,18 @@
+<h2>
+    <div>
+        <iconify-icon icon="ic:baseline-railway-alert"></iconify-icon>
+    </div>
+    <span>Alert</span>
+</h2>
+<form action="/products/delete/<%= product.id %>" method="get">
+    <p>
+        Esta seguro de borrar el producto:<br>
+        <%= product.name %>
+    </p>
+    <input type="hidden" name="allow" value="true">
+    <div>
+        <button type="submit" id="allow-delete">Aceptar</button>
+        <button type="button" class="close-modal" onclick="this.closest('dialog').close()">Cancelar</button>
+    </div>
+
+</form>

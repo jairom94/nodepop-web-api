@@ -1,0 +1,116 @@
+div.cont-register {
+    flex-grow: 1;    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    > div.bg-register {
+        position: absolute;
+        inset: 0;
+        background-image: url('../imgs/bg-login.avif');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        z-index: -2;  
+    }
+    > div.overlay {
+        position: absolute;
+        inset: 0;
+        background-image: url('../imgs/simple-pattern-overlay.png');
+        background-repeat: repeat;
+        background-position: left center;
+        background-color: rgba(0, 0, 0, .15);
+        z-index: -1;
+    }
+    > main.register {
+        /* background-color: olive; */
+        flex-grow: 1;
+        flex-basis: 100%;
+        align-self: stretch;
+        max-width: 80vw;        
+        /* max-width: 100%; */
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* background-color: green; */
+        > div.cont-form-reg{   
+            padding-top: 3rem;
+            > form {
+                display: flex;
+                flex-direction: column;
+                gap: .8rem;
+                padding: 1rem;
+                border-radius: .5rem;
+                border: 2px solid var(--color-text-primary);
+                backdrop-filter: blur(10px);
+                background: linear-gradient(#fff2, transparent);
+                font-family: 'Monda',Arial, Helvetica, sans-serif;
+                > h2 {
+                    font-family: inherit;
+                    text-align: center;
+                    color: var(--bg-green-light);
+                    text-shadow: 1px 1px 1px var(--option-bg);
+                }
+                > div:not(.allow-conditions) {
+                    display: flex;
+                    flex-direction: column;
+                    > label{
+                        color: var(--color-success);
+                        font-size: 1.2em;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--color-text-primary);                        
+                    }
+                    > input[type="email"],input[type="text"],input[type="password"]{
+                        outline: none;
+                        background-color: var(--color-primary);
+                        border: none;
+                        padding: .4rem .5rem;
+                        border-radius: .3rem;
+                        border: solid 1px var(--color-primary);
+                        transition: all .3s ease;
+                        color: var(--color-text-primary);
+                        font-weight: 300;
+                        letter-spacing: .09rem;
+                        font-size: 1.1em;
+                        &:focus{
+                            border-color: var(--color-text-primary);
+                            background-color: var(--color-secondary);
+                        }
+                    }
+                }
+                > input[type="submit"]{
+                    padding: .5rem 1.5rem;                    
+                    /* transform: translateY(1rem); */
+                    font-size: 1em;
+                    border: 1px solid var(--color-text-primary);
+                }
+                > div.allow-conditions {
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: .75rem;
+                    > input[type="checkbox"]{
+                        width: 20px;
+                        height: 20px;                        
+                    }
+                    > label {
+                        color: var(--color-text-primary);                        
+                        > a {
+                            color: var(--bg-black-light);
+                            font-weight: 700;
+                            /* text-shadow: .5px .5px 1px var(--option-bg); */
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width >= 768px){
+    div.cont-register {                
+        > main.register {
+            max-width: 500px;
+        }
+    }
+}

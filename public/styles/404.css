@@ -1,0 +1,70 @@
+main.p-404 {
+    flex-grow: 1;
+    align-self: stretch;
+    padding-top: 60px;
+    width: 100%;
+    /* background-color: coral; */
+    max-width: 90vw;
+    margin: 0 auto;     
+    /* background-color: yellowgreen; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > section {
+        padding: 1rem;        
+        > div{
+            background-color: var(--option-bg);
+            padding: 1rem;
+            border-radius: .5rem;
+            box-shadow: 1px 1px 10px gray;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            > figure {
+                background-color: var(--option-bg);
+                /* background-color: coral; */
+                > img {                
+                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
+                    object-position: center center;
+                    /* aspect-ratio: 16/9; */
+                }
+        
+            }
+            > p {
+                text-align: center;
+                font-family: 'Monda',Arial, Helvetica, sans-serif;
+            }
+            > div.go-home {
+                display: flex;
+                justify-content: center;
+                > a {
+                    font-family: 'Monda',Arial, Helvetica, sans-serif;
+                    display: flex;                
+                    gap: .3rem;
+                    background-color: var(--bg-black-primary);
+                    padding: .5rem 1rem;
+                    color: var(--option-bg);
+                    border-radius: .3rem;
+                    transition: all .3s ease;
+                    > div {
+                        display: flex;
+    
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    &:hover {
+                        background-color: var(--bg-black-light);
+                    }
+                }
+            }    
+        }
+    }
+}
+
+@media screen and (width >= 768) {
+    main.p-404{
+        max-width: 50vw;
+    }
+}

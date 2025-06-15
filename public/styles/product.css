@@ -1,0 +1,80 @@
+main.product-detail {
+    flex-grow: 1;
+    padding-top: 100px;
+    padding-bottom: 2rem;
+    > article {
+        > div.cont-product {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 0 2rem;
+            max-width: 60vw;
+            margin: 0 auto;
+            font-size: .8rem;
+            > figure {
+                /* background-color: yellowgreen; */
+                border-radius: .5rem;                
+                > img {
+                    border-radius: inherit;
+                    width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    aspect-ratio: 16/9;
+                }
+
+            }
+            > div.detail {
+                font-family: 'Monda',Arial, Helvetica, sans-serif;
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                > h2 {
+                    font-size: 2em;
+                }
+                > p {
+                    font-size: 1.2em;
+                    > span {
+                        font-size: 1.5em;
+                        font-weight: 600;
+                        color: var(--bg-red-dark);
+                    }
+                }
+                > div.tags {
+                    >span {
+                        border: 1px solid var(--bg-black);
+                        display: inline-block;
+                        border-radius: .25rem;
+                        padding: .15rem .5rem;
+                        box-shadow: 3px 3px 1px var(--bg-black);
+                    }
+                }
+                > div:not(.tags) {
+                    padding-top: .5rem;
+                    > h3 {
+
+                    }
+
+                }
+
+            }
+        }
+    }    
+}
+
+@media screen and (width >= 768px) {
+    main.product-detail {
+        > article {
+            > div.cont-product {
+                grid-template-columns: repeat(2,1fr);
+                max-width: 80vw;
+                margin: 0 auto;
+                gap: 1rem;
+                font-size: 1rem;
+                > figure {
+                    > img {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

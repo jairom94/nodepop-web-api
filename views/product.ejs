@@ -1,0 +1,35 @@
+<%- include('partials/header.ejs') %>
+    <main class="product-detail">
+        <article>
+            <div class="cont-product">
+                <figure>
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                </figure>
+                <div class="detail">
+                    <h2>
+                        <%= product.name %>
+                    </h2>
+                    <p>
+                        Price: <span>$ <%= product.price %> </span>
+                    </p>
+                    <div class="tags">
+                        <% product.tags.forEach(t=> { %>
+                            <span>
+                                <%= t.name %>
+                            </span>
+                            <% }) %>
+                    </div>
+                    <div>
+                        <h3>Detail</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, debitis quis. Ipsam sint
+                            harum tenetur, quam vitae perspiciatis deleniti non asperiores officiis dolore itaque modi
+                            reprehenderit facilis accusantium est repellendus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_home.ejs') %>

@@ -1,0 +1,115 @@
+:root {
+    font-size: 16px;
+    --bg-page: #e8e8e8;
+    /* --color-text:#fff;   */
+    --color-primary: #27391C;
+    --color-secondary: #3F4F44;
+    --color-warning: #A27B5C;
+    --color-danger: #8E1616;
+
+    --color-text-primary: #ECDFCC;
+    --color-text-secondary: #B9B4C7;
+    --color-text-warning: #F2613F;
+    --color-text-danger: #526D82;
+    --color-success:#1B4242;
+
+
+
+    --bg-header:#FFA725;
+    --bg-red-vintage:#E50046;
+    --bg-white-bone:#FAF6E3;
+    --bg-blue: #295F98;
+    --bg-blue-vintage: #3773b3;
+    --bg-blue-light: #536493;
+    --bg-green:#399918;
+    --bg-green-light:#597445;
+    --bg-black:#000;
+    --bg-red-dark:#8E1616;
+    --bg-red-light:#a42727;
+    --bg-black-primary:#2d2d2d;
+    --bg-black-light:#393E46;
+
+    box-sizing: border-box;
+
+    --arrow-bg: rgba(255, 255, 255, 0.3);
+    --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+    --option-bg: white;
+    --select-bg: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    background-color: var(--bg-page);
+    /* display: flex;
+    flex-direction: column; */
+    /* min-height: 100vh;     */
+    > div.container-page{
+        /* background-color: indianred; */
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+p,
+h1,
+h2,
+h3,
+h4,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+ol,
+figure {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.headding-5{
+    font-size: 1.2rem;
+    font-weight: 400;    
+}
+
+.btn {
+    /* background-color: var(--color-primary); */
+    color: var(--color-text-secondary);
+    border: none;
+    padding: .3rem 1rem;
+    border-radius: .3rem;
+    transition: all .3s ease;
+    cursor: pointer;
+    &:hover{
+        outline: none;
+    }
+}
+
+.btn-primary{
+    background-color: var(--color-primary);
+    &:hover{
+        background-color: var(--color-secondary);
+    }
+}
+
+.btn-secondary {
+    background-color: var(--bg-blue);
+    &:hover{
+        background-color: var(--bg-blue-vintage);
+    }
+}
+
+.btn-danger{
+    background-color: var(--bg-red-dark);
+    &:hover{
+        background-color: var(--bg-red-light);
+        /* color: var(--color-primary); */
+    }
+}

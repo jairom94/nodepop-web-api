@@ -1,0 +1,60 @@
+<div class="cont-form">
+    <form action="/products/update/<%= product._id %>" method="post">
+        <div>
+            <h2>EDIT PRODUCT</h2>
+        </div>
+        <div>
+            <label for="name" class="headding-5">Nombre</label>
+            <input type="text" name="name" id="name-edit-<%= product._id %>" autocomplete="off"
+            placeholder="Nombre del producto..." value="<%= product.name %>">        
+        </div>
+        <div>
+            <label for="price" class="headding-5">Precio</label>
+            <input type="number" name="price" id="price-edit-<%= product._id %>" autocomplete="off"
+            placeholder="0.00"
+            pattern="^\d+\.\d{2}$"
+            value="<%= product.price %>" 
+            >        
+        </div>
+        <div>
+            <label for="image" class="headding-5">Imagen</label>
+            <input type="text" name="image" id="image-edit-<%= product._id %>" 
+            autocomplete="off"   
+            placeholder="Url de la imagen"
+            value="<%= product.image %>"     
+            >        
+        </div>
+        <div>
+            <figure class="cont-image">
+                <div>
+                    <img id="image-generated-edit-<%= product._id %>" alt="Imagen Generada"
+                    src="<%= product.image %>"
+                    >
+                </div>
+            </figure>
+            <button id="show-image-edit" type="button">Cambiar Imagen</button>
+        </div>
+        <div>        
+            <fieldset>
+                <legend class="headding-5">Tags</legend>
+                <div id="tags-edit-<%= product._id %>">
+                    <% tags.forEach(tag => { %>
+                        <label>
+                            <input type="checkbox" name="tags" value="<%= tag.name %>"
+                            <%= product.tags.map(t => t.name).includes(tag.name) ? 'checked' : '' %>
+                            >
+                            <%= tag.name %>
+                        </label>
+                    <% }) %>       
+                </div>
+            </fieldset>
+        </div>
+        <div class="cont-btns">
+            <button class="btn btn-primary" type="submit">Editar</button>
+            <button id="edit-cancel-<%= product._id %>" type="button" class="btn btn-danger"
+                onclick="resetProduct(this,'<%= product._id %>')">
+                Cancelar
+            </button>         
+        </div>
+    </form>
+</div>

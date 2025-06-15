@@ -1,0 +1,71 @@
+<%- include('partials/header.ejs') %>
+    <main class="profile">
+        <section class="hero-profile">
+            <div class="cont-ico">
+                <div>
+                    <iconify-icon icon="basil:user-solid"></iconify-icon>
+                </div>
+                <div>
+                    <p>
+                        <%= username %>
+                    </p>
+                    <p>
+                        Roll: Vendedor
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="dashboard">
+            <article>
+                <p>
+                    Productos Publicados:
+                    <span>
+                        <%= totalProducts %> Unidad/es.
+                    </span>
+                </p>
+            </article>
+            <article>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nro</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach((p,index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= index+1 %>
+                                </td>
+                                <td>
+                                    <%= p.name %>
+                                </td>
+                                <td>
+                                    $ <%= p.price %>
+                                </td>
+                                <td>
+                                    <button onclick="document.querySelector('#view-image-<%= p._id %>').showModal()">
+                                        Ver
+                                    </button>
+                                </td>
+                                <td>
+                                    <%= p.tags.map(t=>t.name).join(', ') %>                                        
+                                </td>
+                            </tr>
+                            <dialog class="modal-view-image" id="view-image-<%= p._id %>" closedby="any">
+                                <figure>
+                                    <img src="<%= p.image %>" alt="">
+                                </figure>
+                            </dialog>
+                            <% }) %>
+
+                    </tbody>
+                </table>
+            </article>
+        </section>
+    </main>
+    <%- include('partials/footer.ejs') %>

@@ -1,0 +1,41 @@
+<%- include('partials/header.ejs') %>
+    <div class="cont-register">
+        <div class="bg-register"></div>
+        <div class="overlay"></div>
+        <main class="register">        
+            <div class="cont-form-reg">
+                <form method="post">
+                    <h2>Register Form</h2>
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name"
+                        placeholder="your fistname">
+                    </div>
+                    <div>
+                        <label for="lastname">Lastname</label>
+                        <input type="text" name="lastname" id="lastname"
+                        placeholder="your first lastname">
+                    </div>
+                    <div>
+                        <label for="email">E-mail</label>
+                        <input type="email" name="email" id="email"
+                        placeholder="example@mail.com">
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password"
+                        placeholder="min 4 chars">
+                    </div>
+                    <div class="allow-conditions">
+                        <input type="checkbox" name="conditions" id="conditions" required>
+                        <label for="conditions">
+                            He leído y acepto las <a href="#">Condiciones de uso</a> y la <a href="#">Política de privacidad</a> estipuladas por Nodepop.
+                        </label>
+                    </div>
+                    <input type="submit" value="Create account" class="btn btn-primary">
+                </form>
+            </div>
+        </main>
+    </div>
+    <%- include('partials/footer.ejs') %>
+    <%- include('scripts/script_home.ejs') %>

@@ -1,0 +1,53 @@
+<div class="cont-form">
+    <button type="button" class="btn btn-danger close-modal" onclick="this.closest('dialog').close()">
+        X
+    </button>
+<form action="/products/add" method="post">
+    <div>
+        <h2>ADD PRODUCT</h2>
+    </div>
+    <div>
+        <label for="name" class="headding-5">Nombre</label>
+        <input type="text" name="name" id="name" autocomplete="off"
+        placeholder="Nombre del producto...">        
+    </div>
+    <div>
+        <label for="price" class="headding-5">Precio</label>
+        <input type="number" name="price" id="price" autocomplete="off"
+        placeholder="0.00"
+        pattern="^\d+\.\d{2}$" 
+        >        
+    </div>
+    <div>
+        <label for="image" class="headding-5">Imagen</label>
+        <input type="text" name="image" id="image" 
+        autocomplete="off"   
+        placeholder="Url de la imagen"
+        value=""     
+        >        
+    </div>
+    <div>
+        <figure class="cont-image">
+            <div>
+                <img id="image-generated" alt="Imagen Generada">
+            </div>
+        </figure>
+        <button id="show-image" type="button">Generar Imagen</button>
+    </div>
+    <div>        
+        <fieldset>
+            <legend class="headding-5">Tags</legend>
+            <% tags.forEach(tag => { %>
+                <label>
+                    <input type="checkbox" name="tags" value="<%= tag.name %>">
+                    <%= tag.name %>
+                </label>
+            <% }) %>       
+        </fieldset>
+    </div>
+    <div class="cont-btns">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <button class="btn btn-secondary" type="reset" id="btnResetAdd">Reset</button>
+    </div>
+</form>
+</div>
