@@ -17,12 +17,15 @@
     <link rel="stylesheet" href="/styles/login.css">
     <link rel="stylesheet" href="/styles/register.css">
     <link rel="stylesheet" href="/styles/home.css">
-    <link rel="stylesheet" href="/styles/header.css">
+    <!-- <link rel="stylesheet" href="/styles/header.css"> -->
     <link rel="stylesheet" href="/styles/products.css">
     <link rel="stylesheet" href="/styles/product.css">
     <link rel="stylesheet" href="/styles/profile.css">
     <link rel="stylesheet" href="/styles/footer.css">
     <link rel="stylesheet" href="/styles/404.css">
+
+    <!-- Tailwind Css -->
+    <link rel="stylesheet" href="/css/output.css">
 
     <!-- CSS de noUiSlider -->
     <link rel="stylesheet" href="/styles/nouislider.css">
@@ -32,188 +35,32 @@
     
     <!-- Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module" src="/js/header.js"></script>
     
     <title>Profile</title>
 </head>
 
 <body>
-    <div class="container-page">
-        <header class="header-main">
-        <div class="menu-xs">
-            <div class="cont-burger"></div>
-        <input type="checkbox" name="menu-checkbox" id="menu-checkbox">
-        <label for="menu-checkbox" class="menu-btn">
-            <div class="open">
-                <iconify-icon icon="mdi:menu-close"></iconify-icon>
+    <div class="flex flex-col min-h-[100dvh]">
+        <header class="fixed top-0 left-0 right-0">                    
+            <div class="line-2 bg-gray-50">
+                <label for="menu-burger">
+                Menu
+                <input type="checkbox" name="menu-burger" id="menu-burger">
+            </label>
             </div>
-            <div class="close">
-                <iconify-icon icon="mdi:menu-open"></iconify-icon>
-            </div>
-        </label>
-        <nav>
-            <div class="logo">
-                <div>
-                    <iconify-icon icon="mdi:airballoon"></iconify-icon>
-                </div>
-                <div class="name">
-                    <span>N</span>
-                    <span>o</span>
-                    <span>d</span>
-                    <span>e</span>
-                    <span>P</span>
-                    <span>o</span>
-                    <span>p</span>
-                </div>
-            </div>
-            <ul class="menu">
-                <li>
-                    <a href="/">
-                        <div>
-                            <iconify-icon icon="mdi:home"></iconify-icon>
-                        </div>
-                        <span>
-                            Home
-                        </span>
-                    </a>
-                </li>
-                <% if (!session.userID) { %>
-                <li>
-                    
-                        <a href="/login">
-                            <div>
-                                <iconify-icon icon="mdi:login-variant"></iconify-icon>
-                            </div>
-                            <span>
-                                Login
-                            </span>
-                        </a>
-                </li>
-                <li>
-                    
-                    <a href="/register">
-                        <div>
-                            <iconify-icon icon="gg:airplane"></iconify-icon>
-                        </div>
-                        <span>
-                            Register
-                        </span>
-                    </a>
-            </li>
-                <% } %>
-                <li>
-                    <a href="/products">
-                        <div>
-                            <iconify-icon icon="mdi:shop"></iconify-icon>
-                        </div>
-                        <span>
-                            Products
-                        </span>
-                    </a>
-                </li>
-                <li>
-
-                    <a href="/profile">
-                        <div>
-                            <iconify-icon icon="mdi:user-box"></iconify-icon>
-                        </div>
-                        <span>
-                            Profile
-                        </span>
-                    </a>
-                </li>                
-            </ul>
-            <div class="user-detail">
-                <% if (session.userID) { %>                 
-                    <div>
-                        <div>
-                            <p class="username">
-                                <%= session.fullname %>
-                            </p>
-                            <a href="/logout">
-                                <div>
-                                    <iconify-icon icon="mdi:logout-variant"></iconify-icon>
-                                </div>
-                                <span>
-                                    Cerrar Sesión
-                                </span>
-                            </a>
-                        </div>
-                        <div>
-                            <iconify-icon icon="mdi:user-circle"></iconify-icon>
-                        </div>
-                    </div>
-                <% } %>
-            </div>
-        </nav>
-        </div>
-        <div class="menu-lg">
-            <div class="cont-nav">
-                <nav>
-                    <a href="/">
-                        <div class="logo">
-                            <div>
-                                <iconify-icon icon="mdi:airballoon"></iconify-icon>
-                            </div>
-                            <div class="name">
-                                <span>N</span>
-                                <span>o</span>
-                                <span>d</span>
-                                <span>e</span>
-                                <span>P</span>
-                                <span>o</span>
-                                <span>p</span>
-                            </div>
-                        </div>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="/">
-                                <div>
-                                    <iconify-icon icon="mdi:home"></iconify-icon>
-                                </div>
-                                <span>
-                                    Home
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/products">
-                                <div>
-                                    <iconify-icon icon="akar-icons:shopping-bag"></iconify-icon>
-                                </div>
-                                <span>
-                                    Products
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/profile">
-                                <div>
-                                    <iconify-icon icon="akar-icons:person"></iconify-icon>
-                                </div>
-                                <span>
-                                    Profile
-                                </span>
-                            </a>
-                        </li>
-                        <li class="login">
-                            <% if (session.userID) { %>
-                                <a href="/logout">                                
-                                    <span>
-                                        Logout
-                                    </span>
-                                </a>
-                            <% }else { %>
-                            <a href="/login">                                
-                                <span>
-                                    Registrate o inicia sessión
-                                </span>
-                            </a>
-                            <% } %>
-                        </li>
-                    </ul>                    
-                </nav>
-            </div>
-        </div>
-        
         </header>
+        <div class="menu-vertical transition-all duration-300 w-0 overflow-hidden grid grid-cols-[250px_1fr] fixed top-[var(--height-header)] left-0 right-0 min-h-[calc(100vh-var(--height-header))] z-50">
+            <div class="w-full bg-gray-50">
+                <ul>
+                <li>Home</li>
+                <li>Home</li>
+                <li>Home</li>
+                <li>Home</li>
+            </ul>
+            </div>
+            <div class="overlay w-full bg-emerald-400/25 backdrop-blur-2xl">
+
+            </div>
+        </div>

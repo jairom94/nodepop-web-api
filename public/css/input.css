@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+
+@theme {
+    --height-header:18px;
+}

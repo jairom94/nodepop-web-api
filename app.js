@@ -34,8 +34,8 @@ app.use(express.json());
 
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
-app.use(messagesManager.flashActivate);
-app.use(messagesManager.useErrorMessages);
+// app.use(messagesManager.flashActivate);
+// app.use(messagesManager.useErrorMessages);
 
 //Rutas de la app
 app.use('/',indexRouter);
@@ -54,8 +54,7 @@ app.use((req,res,next)=>{
 
 
 app.use((err,req,res,next)=>{
-    console.log(err);
-    
+    // console.log(err);
     if(err.array){
         if (req.url.startsWith('/products/')) {            
             const errors = err.array().map(e =>`${e.path} ${e.msg}`)
