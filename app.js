@@ -6,6 +6,7 @@ import createHttpError from 'http-errors';
 import connectMongoose from './lib/connectMongoose.js';
 import * as sessionManager from './lib/sessionManager.js';
 import * as messagesManager from './lib/messageFlash.js';
+import * as buildHeader from './lib/buildHeader.js'
 
 import indexRouter from './routes/index.js';
 import loginRouter from './routes/login.js';

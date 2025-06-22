@@ -2,14 +2,13 @@ import User from '../models/User.js';
 
 export const logginPost = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body;        
         const user = await User.findOne({ email: email })
-        console.log(email,password);
         
         if (!user || !(await user.comparePassword(password))) {
             res.locals.error = 'Invalid credentials'
             res.locals.email = email
-            return res.render('login')            
+            return res.status(401).render('login')            
         }
         console.log(`${user.name} ${user.lastname_1}`);
         
@@ -22,7 +21,9 @@ export const logginPost = async (req, res, next) => {
     }
 }
 
-export const logginGet = (req, res, next) => {       
+export const logginGet = (req, res, next) => {
+    res.locals.error = '';
+    res.locals.email = '';       
     if(req.session.userID){
         res.redirect('/profile');
         return

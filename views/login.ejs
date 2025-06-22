@@ -1,34 +1,59 @@
-    <%- include('partials/header.ejs') %>
-    <div class="login">
-        <div class="bg-login"></div>
-        <div class="overlay"></div>
-        <main class="container-login">        
-            <div class="cont-form-login">
-                <form method="post">
-                    <div class="cont-icon">
-                        <iconify-icon icon="mynaui:user-square-solid"></iconify-icon>
-                    </div>
-                    <h1>Login</h1>
-                    <div>
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" id="email"
-                        placeholder="example@mail.com"
-                        autocomplete="off">
-                    </div>
-                    <div>
-                        <label for="password">Password:</label>
-                        <input type="password" name="password" id="password"
-                        placeholder="write your password...">
-                    </div>
-                    <input class="btn btn-primary" type="submit" value="Enter">
-                    <div class="to-register">
-                        <p>
-                            ¿No tienes cuenta? <a href="/register">Crear cuenta</a> 
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </main>
-    </div>
-    <%- include('partials/footer.ejs') %>
-    <%- include('scripts/script_home.ejs') %>
+<%- // include('partials/header.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind Css -->
+    <link rel="stylesheet" href="/css/output.css" />
+
+    <!-- CSS NOTIFICATIONS -->
+    <link rel="stylesheet" href="/css/notifications.css" />
+
+    <title>Login</title>
+  </head>
+  <body class="bg-gray-600">
+    <ul class="notification-container" data-error="<%= error %>"></ul>
+    <main
+      class="container-login min-h-dvh max-w-[50vw] md:max-w-[400px] m-[0_auto] flex flex-col justify-center"
+    >
+      <form
+        method="post"
+        class="<%= ` form flex flex-col gap-5 bg-gray-50 rounded-2xl [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&>div>input]:px-3 [&>div>input]:py-3 px-5 py-8` %>"
+      >
+        <h1 class="font-bold text-2xl text-gray-800">
+          ¡Te damos la bienvenida!
+        </h1>
+        <div
+          class="email relative pt-2 border border-gray-500 text-gray-500 rounded-md"
+        ></div>
+        <div
+          class="password relative pt-2 border border-gray-500 text-gray-500 rounded-md"
+        ></div>
+
+        <div>
+          <div class="text-center">
+            <a class="text-emerald-800 hover:underline" href="#"
+              >¿Has olvidado tu contraseña?</a
+            >
+          </div>
+          <input
+            class="bg-emerald-600 rounded-4xl transition-colors duration-300 text-gray-50 text-lg font-medium py-3 cursor-pointer hover:bg-emerald-700"
+            type="submit"
+            value="Acceder a Nodepop"
+          />
+        </div>
+        <div class="to-register text-center">
+          <p>
+            ¿No tienes cuenta?
+            <a class="text-emerald-600 hover:underline" href="/register"
+              >Crear cuenta</a
+            >
+          </p>
+        </div>
+      </form>
+    </main>
+    <script type="module" src="/js/login.js"></script>
+  </body>
+</html>
