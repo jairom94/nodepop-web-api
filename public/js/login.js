@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     const form = document.querySelector('.form') 
     const containerEmail = form.querySelector('.email')
     const containerPassword = form.querySelector('.password')   
-    const email = inputController(containerEmail,'email','email','Dirección de e-mail')
+    
+    const rememberEmail = containerEmail.dataset.email
+
+    const email = inputController(containerEmail,'email','email','Dirección de e-mail',rememberEmail)
     const password = inputController(containerPassword,'password','password','Contraseña')
     const fields = [email.getInput(),password.getInput()]
     

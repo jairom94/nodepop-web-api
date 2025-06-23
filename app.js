@@ -35,6 +35,7 @@ app.use(express.json());
 
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
+app.use(buildHeader.getCategories)
 // app.use(messagesManager.flashActivate);
 // app.use(messagesManager.useErrorMessages);
 

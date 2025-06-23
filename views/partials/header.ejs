@@ -1,66 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Concert+One&family=Gugi&family=Kanit:wght@900&family=Monda:wght@400..700&display=swap"
-        rel="stylesheet">
-
-    <!-- Css -->
-    <link rel="stylesheet" href="/styles/normalize.css">
-    <link rel="stylesheet" href="/styles/common.css">
-    <link rel="stylesheet" href="/styles/login.css">
-    <link rel="stylesheet" href="/styles/register.css">
-    <link rel="stylesheet" href="/styles/home.css">
-    <!-- <link rel="stylesheet" href="/styles/header.css"> -->
-    <link rel="stylesheet" href="/styles/products.css">
-    <link rel="stylesheet" href="/styles/product.css">
-    <link rel="stylesheet" href="/styles/profile.css">
-    <link rel="stylesheet" href="/styles/footer.css">
-    <link rel="stylesheet" href="/styles/404.css">
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Concert+One&family=Gugi&family=Kanit:wght@900&family=Monda:wght@400..700&display=swap"
+      rel="stylesheet"
+    />    
 
     <!-- Tailwind Css -->
-    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/output.css" />
 
     <!-- CSS de noUiSlider -->
-    <link rel="stylesheet" href="/styles/nouislider.css">
+    <link rel="stylesheet" href="/styles/nouislider.css" />
 
     <!-- Icons -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    
+
     <!-- Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="module" src="/js/header.js"></script>
-    
+
     <title>Profile</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="flex flex-col min-h-[100dvh]">
-        <header class="fixed top-0 left-0 right-0">                    
-            <div class="line-2 bg-gray-50">
-                <label for="menu-burger">
-                Menu
-                <input type="checkbox" name="menu-burger" id="menu-burger">
-            </label>
-            </div>
-        </header>
-        <div class="menu-vertical transition-all duration-300 w-0 overflow-hidden grid grid-cols-[250px_1fr] fixed top-[var(--height-header)] left-0 right-0 min-h-[calc(100vh-var(--height-header))] z-50">
-            <div class="w-full bg-gray-50">
-                <ul>
-                <li>Home</li>
-                <li>Home</li>
-                <li>Home</li>
-                <li>Home</li>
-            </ul>
-            </div>
-            <div class="overlay w-full bg-emerald-400/25 backdrop-blur-2xl">
-
-            </div>
+      <header class="fixed top-0 left-0 right-0 px-5 bg-gray-50">
+        <div class="line-1 flex gap-3">
+          <figure class="logo">
+            <img src="/imgs/logo/logo.svg" alt="" />
+          </figure>
+          <div class="relative flex-1 flex flex-col justify-center">
+            <input
+              class="input-search border rounded-2xl px-3 py-2 hover:outline-1 peer"
+              type="text"
+              name="search"
+              id="search"
+            />
+            <span class="peer-focus:hidden icon-search text-2xl pointer-events-none absolute top-[.6rem] left-3">
+              <iconify-icon
+                icon="pajamas:search-sm"
+              ></iconify-icon>
+            </span>
+            <span class="peer-focus:hidden placeholder pointer-events-none absolute top-[.8rem] left-[3rem]">
+                Busca
+            </span>
+            <div class="peer-focus:hidden tags absolute top-[.8rem] left-[5.8rem] font-bold text-gray-700" data-tags="<%= headerCategories %>"></div>
+          </div>
         </div>
+
+        <div class="line-2 flex items-center gap-3">
+          <label for="menu-burger" class="flex items-center">
+            <span class="flex justify-center items-center has-[~input:checked]:hidden text-2xl">
+              <iconify-icon
+                icon="line-md:close-to-menu-transition"
+              ></iconify-icon>
+            </span>
+            <span class="justify-center items-center hidden text-2xl has-[~input:checked]:flex">
+              <iconify-icon
+                icon="line-md:menu-to-close-transition"
+              ></iconify-icon>
+            </span>            
+            <input
+              class="hidden"
+              type="checkbox"
+              name="menu-burger"
+              id="menu-burger"
+            />
+            <span class="">Buscar por categorías</span>
+          </label>
+          <div class="">
+                <a href="#">Todos los productos</a>
+          </div>
+        </div>
+      </header>
+      <div
+        class="menu-vertical transition-all duration-300 w-0 overflow-hidden grid grid-cols-[250px_1fr] fixed top-[var(--height-header)] left-0 right-0 min-h-[calc(100vh-var(--height-header))] z-50"
+      >
+        <div class="w-full bg-gray-50">
+          <ul>
+            <li>Home</li>
+            <li>Home</li>
+            <li>Home</li>
+            <li>Home</li>
+          </ul>
+        </div>
+        <div class="overlay w-full bg-emerald-400/25 backdrop-blur-2xl"></div>
+      </div>
+    

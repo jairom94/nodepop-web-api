@@ -7,6 +7,12 @@ const tagSchema = new mongoose.Schema({
     }
 })
 
+tagSchema.statics.listByField = function(field){
+    const query = Tag.find()
+    query.select(field)
+    return query.exec()
+}
+
 const Tag = mongoose.model('Tag',tagSchema);
 
 export default Tag;
