@@ -1,18 +1,20 @@
 <%- include('partials/header.ejs') %>
-    <main class="home pt-[var(--height-header)]">
+    <main class="home pt-[var(--height-header)] pb-[82px] md:pt-[var(--height-header-md)]">
         <section class="hero flex h-[384px] w-full">            
         </section>
-        <section class="detail">
+        <section class="detail pt-8 max-w-[80vw] md:max-w-[750px] m-[0_auto]">
             <article>
-                <h2>Lo que necesitas para tu Motor</h2>
-                <ul>
+                <h2 class="text-2xl font-medium text-gray-900">Lo que necesitas para tu Motor</h2>
+                <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <% productsMotor.forEach(p => { %>
                         <li>
                             <figure>
                                 <div>
-                                    <img src="<%= p.image %>" alt="<%= p.name %>">
+                                    <img 
+                                    class="rounded-md"
+                                    src="<%= p.image %>" alt="<%= p.name %>">
                                 </div>
-                                <figcaption>
+                                <figcaption class="text-gray-700 text-xs">
                                     <p>
                                         <%= p.name %>
                                     </p>
@@ -25,16 +27,18 @@
                     <% }) %>
                 </ul>
             </article>
-            <article>
-                <h2>Tu estilo de vida</h2>
-                <ul>
+            <article class="detail pt-8 max-w-[80vw] md:max-w-[750px] m-[0_auto]">
+                <h2 class="text-2xl font-medium text-gray-900">Tu estilo de vida</h2>
+                <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <% productsLifestyle.forEach(p => { %>
                         <li>
                             <figure>
                                 <div>
-                                    <img src="<%= p.image %>" alt="<%= p.name %>">
+                                    <img 
+                                    class="rounded-md"
+                                    src="<%= p.image %>" alt="<%= p.name %>">
                                 </div>
-                                <figcaption>
+                                <figcaption class="text-gray-700 text-xs">
                                     <p>
                                         <%= p.name %>
                                     </p>

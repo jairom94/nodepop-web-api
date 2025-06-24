@@ -2,6 +2,7 @@
 
 @theme {
   --height-header: 72px;
+  --height-header-md: 128px;
   --animate-fade-in: fadeIn 1s ease-in-out;
   @keyframes fadeIn {
     0% {

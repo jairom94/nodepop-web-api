@@ -1,0 +1,104 @@
+  <%- include('partials/header.ejs') %>
+    <main
+      class="flex-1 pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]"
+    >
+      <section class="max-w-[50vw] m-[0_auto]">
+        <h1 class="font-bold text-center text-3xl pb-8 pt-5">
+          Creacion de un producto
+        </h1>
+        <form class="form flex flex-col gap-3" method="post" enctype="multipart/form-data">
+          <div
+            class="relative border pb-2 has-[>input:focus]:pb-1 has-[>input:focus]:pt-1 flex overflow-hidden rounded-lg"
+          >
+            <span
+              class="absolute bg-black text-white -left-0 -top-0 pr-[.3rem] flex justify-center items-center text-5xl"
+            >
+              <iconify-icon icon="mingcute:empty-box-fill"></iconify-icon>
+            </span>
+            <input
+              class="flex-1 focus:outline-none rounded-[inherit] pl-[3.5rem] pr-3 pt-2 pb-2 focus:pt-3 focus:pb-1 peer"
+              type="text"
+              name="name"
+              id="title"
+              autocomplete="off"
+              placeholder=" "
+            />
+            <label
+              class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
+              for="title"
+              >Nombre del producto</label
+            >
+          </div>
+          <div
+            class="relative border pb-2 has-[>input:focus]:pb-1 has-[>input:focus]:pt-1 flex overflow-hidden rounded-lg"
+          >
+            <span
+              class="absolute -left-3 -top-3 flex justify-center items-center text-7xl"
+            >
+              <iconify-icon icon="iconoir:euro-square-solid"></iconify-icon>
+            </span>
+            <input
+              class="[&::-webkit-inner-spin-button]:appearance-none [appearance:textfield] flex-1 focus:outline-none rounded-[inherit] pl-[3.5rem] pr-3 pt-2 pb-2 focus:pt-3 focus:pb-1 peer"
+              type="number"
+              name="price"
+              id="price"
+              placeholder=" "
+              autocomplete="off"
+              pattern="^\d+\.\d{2}$"
+            />
+            <label
+              class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
+              for="price"
+              >Precio del producto</label
+            >
+          </div>
+          <div class="flex flex-col gap-2">
+            <span>Imagen del producto</span>
+            <label
+              class="block cursor-pointer rounded-md border border-dashed py-7 text-center"
+            >
+              <span class="text-sm">
+                Arrastra tus imágenes aquí o haz clic para seleccionar
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                name="image"                
+                class="hidden"
+              />
+            </label>
+            <div class="preview-container hidden" id="preview-container-create"></div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <span>Categorías</span>
+            <div
+              class="dropdown-cont relative border rounded-lg overflow-hidden flex flex-col"
+            >            
+              <select
+                class="focus:outline-none px-2 py-1"
+                name="tags[]"
+                id="categories"
+                multiple
+              >                
+                <% tags.forEach(tag => { %>
+                <option value="<%= tag.name %>"><%= tag.name %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="btn-submit flex flex-col">
+            <button
+              class="bg-emerald-600 hover:bg-emerald-800 text-white transition-colors duration-300 py-3 rounded-lg cursor-pointer text-lg font-medium tracking-wide"
+              type="submit"
+            >
+              Crear Producto
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <%-// include('partials/footer.ejs') %>
+  </div>
+    <!-- <script type="module" src="/js/hero.js"></script> -->
+  </body>
+</html>

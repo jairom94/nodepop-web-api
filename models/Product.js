@@ -35,6 +35,7 @@ productSchema.statics.list = function ({...args}) {
     query.skip(args?.['skip'])
     query.sort(args?.['sort'])
     query.select(args?.['fields'])
+    query.populate('tags')
     return query.exec()            
 }
 

@@ -16,6 +16,7 @@ import logoutRouter from './routes/logout.js';
 import productRouter from './routes/products.js';
 
 
+
 await connectMongoose();
 console.log('Success connect to MongoDB');
 
@@ -58,11 +59,12 @@ app.use((req,res,next)=>{
 app.use((err,req,res,next)=>{
     // console.log(err);
     if(err.array){
-        if (req.url.startsWith('/products/')) {            
+        if (req.url.startsWith('/products/add')) {            
             const errors = err.array().map(e =>`${e.path} ${e.msg}`)
             const title = `We can´t ${req.url.split('/')[2]} product`
-            req.flash('error',errors);            
-            res.redirect('/products')
+            // req.flash('error',errors);  
+            // console.log(errors);
+            res.redirect('/products/add')
             return
         }
     }

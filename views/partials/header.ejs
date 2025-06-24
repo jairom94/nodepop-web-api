@@ -30,10 +30,15 @@
 
   <body>
     <div class="flex flex-col min-h-[100dvh]">
-      <header class="fixed top-0 left-0 right-0 px-5 bg-gray-50">
+      <header class="fixed top-0 left-0 right-0 px-5 md:py-7 bg-gray-50 z-50">
         <div class="line-1 flex gap-3">
           <figure class="logo">
-            <img src="/imgs/logo/logo.svg" alt="" />
+            <img 
+            class="md:hidden"
+            src="/imgs/logo/logo.svg" alt="" />
+            <img 
+            class="hidden md:block"
+            src="/imgs/logo/logo-desktop.svg" alt="" />
           </figure>
           <div class="relative flex-1 flex flex-col justify-center">
             <input
@@ -51,11 +56,47 @@
                 Busca
             </span>
             <div class="peer-focus:hidden tags absolute top-[.8rem] left-[5.8rem] font-bold text-gray-700" data-tags="<%= headerCategories %>"></div>
+          </div> 
+          <!-- Menu Desktop -->
+          <div class="hidden md:flex md:gap-2">
+            <% if (session.userID) { %>
+             <a 
+             class="rounded-4xl border-2 border-emerald-500 px-16 py-2 font-medium transition-opacity duration-300 hover:opacity-70 cursor-pointer flex items-center gap-3"
+             href="">
+             <span class="flex justify-center items-center text-md">
+              <iconify-icon
+                icon="line-md:close-to-menu-transition"
+              ></iconify-icon>
+            </span>
+              <span>Logout</span>
+             </a>
+            <% }else{%>
+              <a 
+              class="flex gap-3 justify-center items-center rounded-4xl border-2 border-emerald-500 px-6 py-2 font-medium transition-opacity duration-300 hover:opacity-70"
+              href="#">
+              <span class="flex justify-center items-center text-md">
+              <iconify-icon
+                icon="line-md:close-to-menu-transition"
+              ></iconify-icon>
+            </span>
+                 <span>Regístrate o inicia sesión</span>
+              </a>
+            <% } %>
+            <a 
+            class="flex items-center justify-center gap-3 rounded-4xl border-2 border-emerald-500 bg-emerald-500 px-6 py-2 font-medium transition-opacity duration-300 hover:opacity-70"
+            href="/products/add">
+              <span class="flex justify-center items-center text-md">
+              <iconify-icon
+                icon="line-md:close-to-menu-transition"
+              ></iconify-icon>
+            </span>
+              <span>Vender o comprar</span>
+            </a>
           </div>
         </div>
 
         <div class="line-2 flex items-center gap-3">
-          <label for="menu-burger" class="flex items-center">
+          <label for="menu-burger" class="flex items-center cursor-pointer">
             <span class="flex justify-center items-center has-[~input:checked]:hidden text-2xl">
               <iconify-icon
                 icon="line-md:close-to-menu-transition"
@@ -75,21 +116,74 @@
             <span class="">Buscar por categorías</span>
           </label>
           <div class="">
-                <a href="#">Todos los productos</a>
+                <a href="/products">Todos los productos</a>
           </div>
         </div>
       </header>
       <div
-        class="menu-vertical transition-all duration-300 w-0 overflow-hidden grid grid-cols-[250px_1fr] fixed top-[var(--height-header)] left-0 right-0 min-h-[calc(100vh-var(--height-header))] z-50"
+        class="menu-vertical transition-all duration-300 w-0 overflow-hidden grid grid-cols-[250px_1fr] fixed top-[var(--height-header)] md:top-[var(--height-header-md)] left-0 right-0 min-h-[calc(100vh-var(--height-header))] z-50"
       >
-        <div class="w-full bg-gray-50">
-          <ul>
-            <li>Home</li>
-            <li>Home</li>
-            <li>Home</li>
-            <li>Home</li>
+        <div class="w-full bg-gray-100 pt-8 px-3">
+          <h3 class="pb-6 font-medium text-2xl">Todas las categorías</h3>
+          <ul class="tags-menu flex flex-col gap-3" >            
           </ul>
         </div>
         <div class="overlay w-full bg-emerald-400/25 backdrop-blur-2xl"></div>
+      </div>
+      <!-- Menu Mobile -->       
+      <div class="fixed z-50 right-0 bottom-0 left-0 bg-gray-200 shadow-[0_4px_10px_rgb(0,0,0)] md:hidden">
+        <nav>
+          <ul class="flex gap-2 justify-between [&>li]:py-4">
+            <li class=" flex-1 ">
+              <a class="flex flex-col items-center" href="/">
+                <span class="flex justify-center items-center">
+                  <iconify-icon icon="bxs:category"></iconify-icon>
+                </span>
+                <span>Home</span>
+              </a>
+            </li>
+            <li class=" flex-1">
+              <a class="flex flex-col items-center" href="#">
+                <span class="flex justify-center items-center">
+                  <iconify-icon icon="bxs:category"></iconify-icon>
+                </span>
+                <span>Favoritos</span>
+              </a>
+            </li>
+            <li class=" flex-1">
+              <a class="flex flex-col items-center" href="/products/add">
+                <span class="flex justify-center items-center">
+                  <iconify-icon icon="bxs:category"></iconify-icon>
+                </span>
+                <span>Subelo</span>
+              </a>
+            </li>
+            <li class=" flex-1">
+              <a class="flex flex-col items-center" href="#">
+                <span class="flex justify-center items-center">
+                  <iconify-icon icon="bxs:category"></iconify-icon>
+                </span>
+                <span>Buzón</span>
+              </a>
+            </li>
+            <li class=" flex-1">
+              <% if (session.userID) { %>
+                <a class="flex flex-col items-center" href="/login">
+                <span class="flex justify-center items-center">
+                  <iconify-icon icon="bxs:category"></iconify-icon>
+                </span>
+                <span>Logout</span>
+              </a>
+              <% }else{ %>
+                <a class="flex flex-col items-center" href="/login">
+                  <span class="flex justify-center items-center">
+                    <iconify-icon icon="bxs:category"></iconify-icon>
+                  </span>
+                  <span>Login</span>
+                </a>
+              <% } %>
+            </li>
+          </ul>
+        </nav>
       </div>
     

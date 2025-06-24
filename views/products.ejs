@@ -1,28 +1,54 @@
 <%- include('partials/header.ejs') %>
-    <main class="products bg-red-300 flex-1 pt-[calc(var(--height-header)+10px)]">
-        <section class="grid grid-cols-1 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]">
+<main
+  class="products flex-1 pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]"
+>
+  <section
+    class="grid grid-cols-1 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]"
+  >
+    <div>Filtrado de productos</div>
+    <div>
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <% products.forEach(p => { %>
+        <li class="transition-all duration-300 hover:scale-[1.01] group">
+          <a href="<%= `/products/${p.id}` %>">
+            <figure class="relative group overflow-hidden rounded-md">
+              <img
+                class="aspect-video w-full rounded-[inherit] object-cover object-center"
+                src="<%= p.image %>"
+                alt="<%= p.name %>"
+              />
+              <div class="pointer-events-none flex gap-2 justify-center items-center backdrop-blur-xs transition-opacity duration-300 absolute inset-0 opacity-0 bg-gray-500/35 group-hover:opacity-100">
+                <button class="delete cursor-pointer bg-red-500 px-4 py-2 rounded-lg text-white hover:bg-red-800 transition-colors duration-300 pointer-events-auto">Borrar</button>
+                <button class="update cursor-pointer bg-sky-700 px-4 py-2 rounded-lg text-white hover:bg-sky-400 transition-colors duration-300 pointer-events-auto">Editar</button>
+              </div>
+            </figure>
             <div>
-                Filtrado de productos
+              <h2 class="text-2xl font-medium"><%= p.name %></h2>
+              <h3
+                class="text-xl font-bold text-red-700 group-hover:text-red-500"
+              >
+                <%= p.price %> €
+              </h3>
+              <ul class="flex gap-2 pt-2">
+                  <% p.tags.forEach(tag => { %>
+                  <li
+                    class="rounded-xl border border-emerald-500 px-2 text-sm text-emerald-800"                
+                  >
+                    <%= tag.name %>
+                  </li>
+                  <% }) %>
+              </ul>
             </div>
-            <div>
-                <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-                    <% products.forEach(p => { %>
-                     <li>
-                        <a href="<%= `/products/${p.id}` %>">
-                        <figure>
-                            <img src="<%= p.image %>" alt="<%= p.name %>">
-                        </figure>
-                        <div>
-                            <h2><%= p.name %></h2>
-                            <h3><%= p.price %></h3>
-
-                        </div>
-                        </a>
-                     </li>
-                    <% }) %>
-                </ul>
-            </div>
-        </section>
-    </main>
-    <%- include('partials/footer.ejs') %>
-    <%- //include('scripts/script_products.ejs',{}) %>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </section>
+</main>
+</div>
+    <script type="module" src="/js/update.js"></script>
+  </body>
+</html>
+<%- //include('partials/footer.ejs') %> 
+<%- //include('scripts/script_products.ejs',{}) %>

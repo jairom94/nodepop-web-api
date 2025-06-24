@@ -1,35 +1,62 @@
 <%- include('partials/header.ejs') %>
-    <main class="product-detail">
-        <article>
-            <div class="cont-product">
-                <figure>
-                    <img src="<%= product.image %>" alt="<%= product.name %>">
-                </figure>
-                <div class="detail">
-                    <h2>
-                        <%= product.name %>
-                    </h2>
-                    <p>
-                        Price: <span>$ <%= product.price %> </span>
-                    </p>
-                    <div class="tags">
-                        <% product.tags.forEach(t=> { %>
-                            <span>
-                                <%= t.name %>
-                            </span>
-                            <% }) %>
-                    </div>
-                    <div>
-                        <h3>Detail</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, debitis quis. Ipsam sint
-                            harum tenetur, quam vitae perspiciatis deleniti non asperiores officiis dolore itaque modi
-                            reprehenderit facilis accusantium est repellendus.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </article>
-    </main>
-    <%- include('partials/footer.ejs') %>
-    <%- include('scripts/script_home.ejs') %>
+<main
+  class="product-detail flex-1 pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]"
+>
+  <article
+    class="m-[0_auto] grid max-w-[80dvw] grid-cols-1 py-8 md:grid-cols-3 md:gap-5"
+  >
+    <figure class="relative md:col-span-2">
+      <img
+        class="aspect-video rounded-md object-cover object-center"
+        src="<%= product.image %>"
+        alt="<%= product.name %>"
+      />
+    </figure>
+    <div class="detail">
+      <h2 class="text-2xl font-bold tracking-wider text-gray-700 capitalize">
+        <%= product.name %> €
+      </h2>
+      <p class="text-3xl font-bold text-gray-700">
+        Price: <span>$ <%= product.price %> </span>
+      </p>
+      <p class="pt-3 tracking-wide text-gray-500">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ea
+        fugiat molestias labore harum.
+      </p>
+      <div class="flex gap-2 pt-3 font-medium text-violet-800">
+        <span class="flex justify-center items-center text-2xl w-fit">
+          <iconify-icon icon="mage:delivery-truck-fill"></iconify-icon>
+        </span>
+        <span>Envío Disponible</span>
+      </div>
+      <div class="tags flex gap-3 py-8">
+        <% product.tags.forEach(t=> { %>
+        <span
+          class="text-md rounded-xl bg-gray-200 px-7 py-2 leading-none text-gray-700 capitalize shadow-lg border border-gray-400"
+        >
+          <%= t.name %>
+        </span>
+        <% }) %>
+      </div>
+      <div class="border-t border-gray-300 pt-4">
+        <h4 class="pb-3 text-xl font-bold text-gray-700">
+          Detalles del Producto
+        </h4>
+        <p class="tracking-wider text-gray-600">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem
+          culpa recusandae aut fugit voluptatum eos est exercitationem nisi
+          voluptatibus eligendi ab libero quos sint atque labore, maiores
+          deleniti corporis sunt!
+        </p>
+      </div>
+    </div>
+    <!-- <div class="">
+    </div> -->
+  </article>
+</main>
+</div>
+    <!-- <script type="module" src="/js/hero.js"></script> -->
+  </body>
+</html>
+<%- //include('partials/footer.ejs') %> 
+<%- //include('scripts/script_home.ejs') %>

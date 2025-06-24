@@ -42,10 +42,11 @@ export const productsGet = async (req, res, next) => {
     };
 
     const products = await Product.list({ filter, ...options });
-    // console.log({filter,limit,skip,sort});
-    console.log(products);
+    // const tagsDB = await Tag.find();
+    // console.log(products);
 
     res.locals.products = products;
+    // res.locals.tags = tagsDB;
     res.render("products");
   } catch (error) {
     next(error);
@@ -53,28 +54,52 @@ export const productsGet = async (req, res, next) => {
 };
 
 export const addProduct = async (req, res, next) => {
+  // console.log(req.body);
+
   try {
     //validaciones
     const validations = validationResult(req);
-    if (!validations.isEmpty()) {
-      validations.throw();
+    if (!validations.isEmpty() || !req.file) {
+      // validations.throw();
+      const errors = validations.array();
+      if (!req.file) {
+        errors.push({
+          msg: "Image is required",
+          param: "image",
+          location: "body",
+        });
+      }
+      if(errors.length > 0) {
+        const errorSend = {
+          array: () => errors,
+          throw: () => {
+            const err = new Error('Validation failed');
+            err.status = 400;
+            err.array = () => errors;
+            throw err;
+          }
+        }
+        errorSend.throw()
+      }
     }
+
     //lógica para add
-    const { name, price, image, tags } = req.body;
-    const tagsArray = typeof tags === "string" ? [tags] : tags ?? [];
-    // const user = await User.findById(req.session.userID);
+    const { name, price, tags } = req.body;
+
+    const image = req.file.filename;
+
     const tagsDB = await Tag.find();
     const newProduct = {
       name,
       price,
       owner: req.session.userID,
       image,
-      tags: tagsArray.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
+      tags: tags.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
     };
-    console.log(newProduct);
+    // console.log(newProduct);
     const productInsert = await Product.insertOne(newProduct);
-    console.log(productInsert);
-    res.redirect("/products");
+    // console.log("producto nuevo", productInsert);
+    res.redirect(`/products/${productInsert.id}`);
   } catch (error) {
     next(error);
   }
