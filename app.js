@@ -15,6 +15,15 @@ import profileRouter from './routes/profile.js';
 import logoutRouter from './routes/logout.js';
 import productRouter from './routes/products.js';
 
+//import API
+import * as apiLoginController from './controllers/api/apiLoginController.js'
+import * as jwtAuth from './lib/jwtAuthMiddleware.js'
+import * as apiProductController from './controllers/api/apiProductsController.js'
+import swaggerMiddleware from './lib/swaggerMiddleware.js';
+
+import i18n from './lib/i18nConfigure.js';
+import * as localeController from './controllers/localeController.js'
+
 
 
 await connectMongoose();
@@ -33,9 +42,20 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+/**
+ * API routes
+ */
+app.post('/api/login',apiLoginController.loginJWT)
+app.get('/api/products',jwtAuth.guard,apiProductController.list)
 
+app.use('/api-doc',swaggerMiddleware)
+/**
+ * Webapplication routes
+ */
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
+app.use(i18n.init)
+app.get('/change-locale/:locale', localeController.changeLocale)
 app.use(buildHeader.getCategories)
 // app.use(messagesManager.flashActivate);
 // app.use(messagesManager.useErrorMessages);
@@ -67,6 +87,12 @@ app.use((err,req,res,next)=>{
             res.redirect('/products/add')
             return
         }
+    }
+
+    //Atrapando errores de API
+    if(req.url.startsWith('/api/')){
+        res.json({error:err.message})
+        return
     }
 
     // Atrapando error 404

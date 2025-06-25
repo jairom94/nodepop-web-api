@@ -4,7 +4,7 @@
     >
       <section class="max-w-[50vw] m-[0_auto]">
         <h1 class="font-bold text-center text-3xl pb-8 pt-5">
-          Creacion de un producto
+          <%= __('Create new product') %>
         </h1>
         <form class="form flex flex-col gap-3" method="post" enctype="multipart/form-data">
           <div
@@ -26,7 +26,7 @@
             <label
               class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
               for="title"
-              >Nombre del producto</label
+              ><%= __('Name product') %></label
             >
           </div>
           <div
@@ -49,16 +49,16 @@
             <label
               class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
               for="price"
-              >Precio del producto</label
+              ><%= __('Price product') %></label
             >
           </div>
           <div class="flex flex-col gap-2">
-            <span>Imagen del producto</span>
+            <span><%= __('Image product') %></span>
             <label
               class="block cursor-pointer rounded-md border border-dashed py-7 text-center"
             >
               <span class="text-sm">
-                Arrastra tus imágenes aquí o haz clic para seleccionar
+                <%= __('Drag your image or press click to select') %>
               </span>
               <input
                 type="file"
@@ -70,7 +70,7 @@
             <div class="preview-container hidden" id="preview-container-create"></div>
           </div>
           <div class="flex flex-col gap-2">
-            <span>Categorías</span>
+            <span><%= __('Categories') %></span>
             <div
               class="dropdown-cont relative border rounded-lg overflow-hidden flex flex-col"
             >            
@@ -91,7 +91,7 @@
               class="bg-emerald-600 hover:bg-emerald-800 text-white transition-colors duration-300 py-3 rounded-lg cursor-pointer text-lg font-medium tracking-wide"
               type="submit"
             >
-              Crear Producto
+              <%= __('Create product') %>
             </button>
           </div>
         </form>

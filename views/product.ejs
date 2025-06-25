@@ -14,10 +14,10 @@
     </figure>
     <div class="detail">
       <h2 class="text-2xl font-bold tracking-wider text-gray-700 capitalize">
-        <%= product.name %> €
+        <%= product.name %>
       </h2>
       <p class="text-3xl font-bold text-gray-700">
-        Price: <span>$ <%= product.price %> </span>
+        <span class="text-2xl"><%= __('Price') %>:</span> <span><%= product.price %> €</span>
       </p>
       <p class="pt-3 tracking-wide text-gray-500">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ea
@@ -27,7 +27,7 @@
         <span class="flex justify-center items-center text-2xl w-fit">
           <iconify-icon icon="mage:delivery-truck-fill"></iconify-icon>
         </span>
-        <span>Envío Disponible</span>
+        <span><%= __('Delivery available') %></span>
       </div>
       <div class="tags flex gap-3 py-8">
         <% product.tags.forEach(t=> { %>
@@ -40,7 +40,7 @@
       </div>
       <div class="border-t border-gray-300 pt-4">
         <h4 class="pb-3 text-xl font-bold text-gray-700">
-          Detalles del Producto
+          <%= __('Details product') %>
         </h4>
         <p class="tracking-wider text-gray-600">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem
@@ -49,9 +49,7 @@
           deleniti corporis sunt!
         </p>
       </div>
-    </div>
-    <!-- <div class="">
-    </div> -->
+    </div>    
   </article>
 </main>
 </div>

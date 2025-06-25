@@ -25,6 +25,8 @@ export const logginGet = (req, res, next) => {
     res.locals.error = '';
     res.locals.email = '';       
     if(req.session.userID){
+        console.log(req.session.userID);
+        
         res.redirect('/profile');
         return
     }

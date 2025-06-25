@@ -25,7 +25,7 @@
 
     <script type="module" src="/js/header.js"></script>
 
-    <title>Profile</title>
+    <title>NodePop</title>
   </head>
 
   <body>
@@ -33,12 +33,14 @@
       <header class="fixed top-0 left-0 right-0 px-5 md:py-7 bg-gray-50 z-50">
         <div class="line-1 flex gap-3">
           <figure class="logo">
+            <a href="/">
             <img 
             class="md:hidden"
             src="/imgs/logo/logo.svg" alt="" />
             <img 
             class="hidden md:block"
             src="/imgs/logo/logo-desktop.svg" alt="" />
+            </a>
           </figure>
           <div class="relative flex-1 flex flex-col justify-center">
             <input
@@ -53,7 +55,7 @@
               ></iconify-icon>
             </span>
             <span class="peer-focus:hidden placeholder pointer-events-none absolute top-[.8rem] left-[3rem]">
-                Busca
+                <%= __('Search') %>
             </span>
             <div class="peer-focus:hidden tags absolute top-[.8rem] left-[5.8rem] font-bold text-gray-700" data-tags="<%= headerCategories %>"></div>
           </div> 
@@ -62,24 +64,24 @@
             <% if (session.userID) { %>
              <a 
              class="rounded-4xl border-2 border-emerald-500 px-16 py-2 font-medium transition-opacity duration-300 hover:opacity-70 cursor-pointer flex items-center gap-3"
-             href="">
+             href="/logout">
              <span class="flex justify-center items-center text-md">
               <iconify-icon
                 icon="line-md:close-to-menu-transition"
               ></iconify-icon>
             </span>
-              <span>Logout</span>
+              <span><%= __('Logout') %></span>
              </a>
             <% }else{%>
               <a 
               class="flex gap-3 justify-center items-center rounded-4xl border-2 border-emerald-500 px-6 py-2 font-medium transition-opacity duration-300 hover:opacity-70"
-              href="#">
+              href="Login">
               <span class="flex justify-center items-center text-md">
               <iconify-icon
                 icon="line-md:close-to-menu-transition"
               ></iconify-icon>
             </span>
-                 <span>Regístrate o inicia sesión</span>
+                 <span><%= __('Singup or Login') %></span>
               </a>
             <% } %>
             <a 
@@ -90,7 +92,7 @@
                 icon="line-md:close-to-menu-transition"
               ></iconify-icon>
             </span>
-              <span>Vender o comprar</span>
+              <span><%= __('Sell or buy') %></span>
             </a>
           </div>
         </div>
@@ -113,10 +115,10 @@
               name="menu-burger"
               id="menu-burger"
             />
-            <span class="">Buscar por categorías</span>
+            <span class=""><%= __('Search by categories') %></span>
           </label>
           <div class="">
-                <a href="/products">Todos los productos</a>
+                <a href="/products"><%= __('All products') %></a>
           </div>
         </div>
       </header>
@@ -139,7 +141,7 @@
                 <span class="flex justify-center items-center">
                   <iconify-icon icon="bxs:category"></iconify-icon>
                 </span>
-                <span>Home</span>
+                <span><%= __('Home') %></span>
               </a>
             </li>
             <li class=" flex-1">
@@ -147,7 +149,7 @@
                 <span class="flex justify-center items-center">
                   <iconify-icon icon="bxs:category"></iconify-icon>
                 </span>
-                <span>Favoritos</span>
+                <span><%= __('Favorites') %></span>
               </a>
             </li>
             <li class=" flex-1">
@@ -155,7 +157,7 @@
                 <span class="flex justify-center items-center">
                   <iconify-icon icon="bxs:category"></iconify-icon>
                 </span>
-                <span>Subelo</span>
+                <span><%= __('Create') %></span>
               </a>
             </li>
             <li class=" flex-1">
@@ -163,23 +165,23 @@
                 <span class="flex justify-center items-center">
                   <iconify-icon icon="bxs:category"></iconify-icon>
                 </span>
-                <span>Buzón</span>
+                <span><%= __('Mailbox') %></span>
               </a>
             </li>
             <li class=" flex-1">
               <% if (session.userID) { %>
-                <a class="flex flex-col items-center" href="/login">
+                <a class="flex flex-col items-center" href="/logout">
                 <span class="flex justify-center items-center">
                   <iconify-icon icon="bxs:category"></iconify-icon>
                 </span>
-                <span>Logout</span>
+                <span><%= __('Logout') %></span>
               </a>
               <% }else{ %>
                 <a class="flex flex-col items-center" href="/login">
                   <span class="flex justify-center items-center">
                     <iconify-icon icon="bxs:category"></iconify-icon>
                   </span>
-                  <span>Login</span>
+                  <span><%= __('Login') %></span>
                 </a>
               <% } %>
             </li>

@@ -4,7 +4,7 @@
         </section>
         <section class="detail pt-8 max-w-[80vw] md:max-w-[750px] m-[0_auto]">
             <article>
-                <h2 class="text-2xl font-medium text-gray-900">Lo que necesitas para tu Motor</h2>
+                <h2 class="text-2xl font-medium text-gray-900"><%= __('You Need to motor') %></h2>
                 <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <% productsMotor.forEach(p => { %>
                         <li>
@@ -16,10 +16,10 @@
                                 </div>
                                 <figcaption class="text-gray-700 text-xs">
                                     <p>
-                                        <%= p.name %>
+                                        <%= __('{{name}} is available',p) %>
                                     </p>
                                     <p>
-                                        +5000 anuncios
+                                        +5000 <%= __('ads') %>
                                     </p>
                                 </figcaption>
                             </figure>
@@ -28,7 +28,7 @@
                 </ul>
             </article>
             <article class="detail pt-8 max-w-[80vw] md:max-w-[750px] m-[0_auto]">
-                <h2 class="text-2xl font-medium text-gray-900">Tu estilo de vida</h2>
+                <h2 class="text-2xl font-medium text-gray-900"><%= __('You lifestyle') %></h2>
                 <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <% productsLifestyle.forEach(p => { %>
                         <li>
@@ -40,10 +40,10 @@
                                 </div>
                                 <figcaption class="text-gray-700 text-xs">
                                     <p>
-                                        <%= p.name %>
+                                        <%= __('{{name}} is available', p) %>
                                     </p>
                                     <p>
-                                        +500 anuncios
+                                        +500 <%= __('ads') %>
                                     </p>
                                 </figcaption>
                             </figure>

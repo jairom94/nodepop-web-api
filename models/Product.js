@@ -30,7 +30,15 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.statics.list = function ({...args}) {
-    const query = Product.find(args?.['filter'])
+    const filters = { ...args?.['filter'] || {} };
+    if (filters.name) {        
+        filters.name = {
+            $regex: `^${filters.name}`, // '^' indica el inicio de la cadena.
+            $options: 'i'               // 'i' hace la búsqueda case-insensitive (ignora mayúsculas/minúsculas).
+        };
+    }
+    const query = Product.find(filters);
+    // const query = Product.find(args?.['filter'])
     query.limit(args?.['limit'])
     query.skip(args?.['skip'])
     query.sort(args?.['sort'])
