@@ -10,7 +10,7 @@ import Tag from '../models/Tag.js';
 const router = express.Router();
 
 //View Products By User
-router.get('/', productsGet );
+router.get('', productsGet );
 
 //View to add new product
 router.get('/add',async (req,res,next)=>{

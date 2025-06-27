@@ -1,10 +1,10 @@
 import Product from "../models/Product.js";
 import Tag from "../models/Tag.js";
-import User from "../models/User.js";
-import mongoose from "mongoose";
 import * as funcTools from "../lib/funcTools.js";
 
-import { validationResult } from "express-validator";
+import { query, validationResult } from "express-validator";
+import createHttpError from "http-errors";
+import { Types } from "mongoose";
 
 export const productDetail = async (req, res, next) => {
   try {
@@ -22,32 +22,62 @@ export const productDetail = async (req, res, next) => {
   }
 };
 
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ * @returns 
+ */
 export const productsGet = async (req, res, next) => {
   try {
     const user = req.session.userID;
 
-    const { name, tags, limit, skip, sort } = req.query;
-    const filter = {
-      owner: user,
-      // Sólo añade `name` si name !== undefined
-      ...(!!name && { name }),
-      ...(!!tags && { tags }),
-    };
+    const { tags, sort, page } = req.query;
 
+    // console.log(page);
+    const limit = 8
     const options = {
       // Convierte limit y skip a número si existen
-      ...(!!limit && { limit: parseInt(limit, 10) }),
-      ...(!!skip && { skip: parseInt(skip, 10) }),
+      limit,
+      skip: page ? ((page -1)*limit) : 0,
       ...(!!sort && { sort }),
     };
 
-    const products = await Product.list({ filter, ...options });
-    // const tagsDB = await Tag.find();
-    // console.log(products);
+    const filters = funcTools.buildProductFilters(req.query,user)
+    console.log({ filters, ...options });
+    
+    const count = await Product.countDocuments(filters)  
+    // console.log('count',count)  
+
+    if(count === 0){
+      return next(createHttpError(404,'No hay productos para mostrar'))
+    }
+
+    const products = await Product.list({ filters, ...options });
+    
+    if(options.skip >= count){
+      return next(createHttpError(404,'Productos no encontrados'))
+    }
+    
+    res.locals.pages = Math.ceil(count/options.limit)
+    res.locals.currentPage = page ?? 1
 
     res.locals.products = products;
-    // res.locals.tags = tagsDB;
-    res.render("products");
+
+    const [priceRange] = await Product.priceRange(user)
+    if (priceRange) {      
+      res.locals.priceRange = priceRange
+    }else{
+      res.locals.priceRange = {
+        minPrice:0,
+        maxPrice:100
+      }
+    }
+    
+    console.log(req.query);
+    
+    res.render("products",{query:req.query});
   } catch (error) {
     next(error);
   }
@@ -60,27 +90,14 @@ export const addProduct = async (req, res, next) => {
     //validaciones
     const validations = validationResult(req);
     if (!validations.isEmpty() || !req.file) {
-      // validations.throw();
-      const errors = validations.array();
-      if (!req.file) {
-        errors.push({
-          msg: "Image is required",
-          param: "image",
-          location: "body",
-        });
-      }
-      if(errors.length > 0) {
-        const errorSend = {
-          array: () => errors,
-          throw: () => {
-            const err = new Error('Validation failed');
-            err.status = 400;
-            err.array = () => errors;
-            throw err;
-          }
-        }
-        errorSend.throw()
-      }
+      const newError = {
+        type: "field",
+        value: undefined,
+        msg: "is required",
+        path: "image",
+        location: "body",
+      };
+      validationWithFile(req, validations, newError);
     }
 
     //lógica para add

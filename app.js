@@ -111,6 +111,12 @@ app.use((err,req,res,next)=>{
 
     // Atrapando error 404
     if (err.status === 404) {
+        // console.log(err.message);        
+        if(err.message){
+            res.locals.errors = err.message
+        }else{
+            res.locals.errors = 'Not found, your request'
+        }
         res.status(404).render('404');
         return 
     }

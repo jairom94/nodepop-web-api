@@ -1,13 +1,40 @@
 <%- include('partials/header.ejs') %>
 <main
-  class="products flex-1 pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]"
+  class="products flex-1 flex pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]"
 >
   <section
-    class="grid grid-cols-1 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]"
+    class="grid grid-cols-1 gap-5 md:gap-8 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]"
   >
-    <div>Filtrado de productos</div>
-    <div>
-      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+    <div class="filters">
+      <h4 class="text-emerald-700 text-shadow-md text-shadow-emerald-200 text-2xl font-medium pb-3">Filtrado de productos</h4>
+      <form class="flex flex-col gap-5">
+        <div class="flex flex-col gap-2">
+          <label class="text-emerald-700 text-lg font-medium" for="name-filter">Nombre</label>
+          <input
+          value="<%= query.name %>" 
+          class="border border-emerald-500 outline-emerald-600 rounded-md px-3 py-2"
+          type="text" name="name" id="name-filter">
+          
+        </div>
+        <div>
+          <legend class="text-emerald-700 text-lg font-medium">Range Price</legend>
+          <div class="pt-[3rem] pb-5">
+            <div id="steps-slider"></div>
+          </div>
+              <span class="price-range" data-min-price="<%= priceRange.minPrice %>" data-max-price="<%= priceRange.maxPrice %>"></span>
+              <span class="query-price" data-min="<%= query.min %>" data-max="<%= query.max %>"></span>
+              <input type="hidden" id="price-min" name="min" value="<%= query.min %>">
+              <input type="hidden" id="price-max" name="max" value="<%= query.max %>">
+          </div>
+          <div class="flex flex-col"> 
+            <input 
+            class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md hover:bg-emerald-800 transition-colors duration-300 cursor-pointer" 
+            type="submit" value="Filtrar">
+          </div>
+      </form>
+    </div>    
+    <div class="flex flex-col">
+      <ul class="flex-1 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         <% products.forEach(p => { %>
         <li class="transition-all duration-300 hover:scale-[1.01] group">
           <a href="<%= `/products/${p.id}` %>">
@@ -49,11 +76,35 @@
         </li>
         <% }) %>
       </ul>
+      <% if (pages > 1) { %>
+       <div class="pagination flex gap-3 pt-5">
+        <% if (currentPage > 1) { %>
+          <a 
+          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          href="/products?page=<%= currentPage-1 %>">Prev</a>
+        <% } %>
+        <%for (let i = 1; i <= pages; i++) { %>
+          <a 
+          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          href="/products?<%= new URLSearchParams({ ...query, page: i }).toString() %>"><%= i %></a>          
+        <% } %>
+        <% if (currentPage < pages) { %>
+          <a 
+          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          href="/products?page=<%= `${parseInt(currentPage) + 1}` %>">Next</a>
+        <% } %>
+      </div>
+      <% } %>
+      
     </div>
   </section>
 </main>
 </div>
     <script type="module" src="/js/actions.js"></script>
+    <!-- JS de noUiSlider -->
+    <script src="/scripts/nouislider.js"></script>
+    <script src="/scripts/wNumb.js"></script>
+    <script type="module" src="/js/filter.js"></script>
   </body>
 </html>
 <%- //include('partials/footer.ejs') %> 

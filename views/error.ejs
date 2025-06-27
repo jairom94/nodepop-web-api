@@ -1,16 +1,18 @@
 <%- include('partials/header.ejs') %>
-    <main class="p-404">
-        <section class="message">
-            <div>
-                <figure>
-                    <img src="/imgs/error.png" alt="Not found">
+    <main class="flex-1 flex pt-[calc(var(--height-header)+10px)] md:pt-[calc(var(--height-header-md)+10px)] pb-[82px]">
+        <section class="max-w-[60vw] m-[0_auto] flex justify-center items-center">
+            <div class="flex-1">
+                <figure class="p-2 rounded-xl overflow-hidden shadow-2xl">
+                    <img 
+                    class="object-contain"
+                    src="/imgs/error.png" alt="Not found">
                 </figure>
-                <p>
+                <p class="pt-2 text-center font-medium text-md tracking-wider">
                     <%= error %>
                 </p>
                 <div class="go-home">
-                    <a href="/">
-                        <div>
+                    <a class="flex justify-center rounded-md hover:bg-emerald-700 transition-colors duration-300 gap-2 px-4 py-2 bg-emerald-600 text-gray-50" href="/">
+                        <div class="flex justify-center items-center">
                             <iconify-icon icon="octicon:home"></iconify-icon>
                         </div>
                         <span>
@@ -21,5 +23,9 @@
             </div>
         </section>
     </main>
-    <%- include('partials/footer.ejs') %>
-    <%- include('scripts/script_home.ejs') %>
+    </div>
+    <!-- <script type="module" src="/js/actions.js"></script> -->
+  </body>
+</html>
+    <%- //include('partials/footer.ejs') %>
+    <%- //include('scripts/script_home.ejs') %>

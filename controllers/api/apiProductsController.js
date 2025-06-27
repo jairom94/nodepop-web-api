@@ -201,14 +201,17 @@ export async function getOne(req, res, next) {
 export async function newProduct(req, res, next) {
   try {
     const validations = validationResult(req);
-    const newError = {
-      type: "field",
-      value: undefined,
-      msg: "is required",
-      path: "image",
-      location: "body",
-    };
-    validationWithFile(req, validations, newError);
+    if (!validations.isEmpty() || !req.file) {
+      const newError = {
+        type: "field",
+        value: undefined,
+        msg: "is required",
+        path: "image",
+        location: "body",
+      };
+      validationWithFile(req, validations, newError);
+    }
+    
     const tagsDB = await Tag.find();
 
     const userId = req.apiUserId;

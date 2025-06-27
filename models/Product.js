@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 // import { index } from "../controllers/homeController";
 
 
@@ -30,21 +30,38 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.statics.list = function ({...args}) {
-    const filters = { ...args?.['filter'] || {} };
-    if (filters.name) {        
-        filters.name = {
-            $regex: `^${filters.name}`, // '^' indica el inicio de la cadena.
-            $options: 'i'               // 'i' hace la búsqueda case-insensitive (ignora mayúsculas/minúsculas).
-        };
-    }
+    const filters = { ...args?.['filters'] || {} };
+    // if (filters.name) {        
+    //     filters.name = {
+    //         $regex: `^${filters.name}`, // '^' indica el inicio de la cadena.
+    //         $options: 'i'               // 'i' hace la búsqueda case-insensitive (ignora mayúsculas/minúsculas).
+    //     };
+    // }
     const query = Product.find(filters);
     // const query = Product.find(args?.['filter'])
     query.limit(args?.['limit'])
     query.skip(args?.['skip'])
     query.sort(args?.['sort'])
     query.select(args?.['fields'])
-    query.populate('tags')
+    query.populate('tags')    
     return query.exec()            
+}
+
+productSchema.statics.priceRange = function(userId) {
+    return Product.aggregate([
+            {
+                $match: {
+                    owner: Types.ObjectId.createFromHexString(userId)
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    minPrice: { $min: "$price" },
+                    maxPrice: { $max: "$price" }
+                }
+            }
+        ])
 }
 
 const Product = mongoose.model('Product',productSchema);
