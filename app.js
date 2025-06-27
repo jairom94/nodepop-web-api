@@ -19,10 +19,13 @@ import productRouter from './routes/products.js';
 import * as apiLoginController from './controllers/api/apiLoginController.js'
 import * as jwtAuth from './lib/jwtAuthMiddleware.js'
 import * as apiProductController from './controllers/api/apiProductsController.js'
+import upload from './lib/uploadConfigure.js'
 import swaggerMiddleware from './lib/swaggerMiddleware.js';
 
 import i18n from './lib/i18nConfigure.js';
 import * as localeController from './controllers/localeController.js'
+import { body } from 'express-validator';
+import { validateProductPatch, validateProductPost, validateProductPut } from './validators/product-validator.js';
 
 
 
@@ -46,7 +49,12 @@ app.use(express.json());
  * API routes
  */
 app.post('/api/login',apiLoginController.loginJWT)
-app.get('/api/products',jwtAuth.guard,apiProductController.list)
+app.get('/api/products'           ,jwtAuth.guard,apiProductController.list)
+app.get('/api/products/:productId',jwtAuth.guard,apiProductController.getOne)
+app.post('/api/products',          jwtAuth.guard,upload.single('image'),validateProductPost,apiProductController.newProduct)
+app.put('/api/products/:productId',jwtAuth.guard,upload.single('image'),validateProductPut,apiProductController.update)
+app.patch('/api/products/:productId',jwtAuth.guard,upload.single('image'),validateProductPatch,apiProductController.partialUpdate)
+app.delete('/api/products/:productId',jwtAuth.guard,apiProductController.deleteProduct)
 
 app.use('/api-doc',swaggerMiddleware)
 /**
@@ -67,13 +75,14 @@ app.use('/logout',logoutRouter);
 app.use('/register',registerRouter);
 app.use(sessionManager.guard); 
 app.use('/profile',profileRouter);
-app.use('/products',productRouter); //Reparar la paginacion al filtrado
+app.use('/products',productRouter); 
 
 
 app.use((req,res,next)=>{   
     //Registro de error 404 
     next(createHttpError(404))
 });
+
 
 
 app.use((err,req,res,next)=>{
@@ -87,11 +96,16 @@ app.use((err,req,res,next)=>{
             res.redirect('/products/add')
             return
         }
+        if(req.url.startsWith('/api/')){
+            const errors = err.array().map(e => ({field:e.path,msg:e.msg}))
+            res.json({errors})
+            return
+        }
     }
 
     //Atrapando errores de API
     if(req.url.startsWith('/api/')){
-        res.json({error:err.message})
+        res.status(err.status).json({error:err.message})
         return
     }
 
