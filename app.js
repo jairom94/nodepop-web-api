@@ -23,6 +23,7 @@ import upload from './lib/uploadConfigure.js'
 import swaggerMiddleware from './lib/swaggerMiddleware.js';
 
 import i18n from './lib/i18nConfigure.js';
+import cookieParser from 'cookie-parser';
 import * as localeController from './controllers/localeController.js'
 import { body } from 'express-validator';
 import { validateProductPatch, validateProductPost, validateProductPut } from './validators/product-validator.js';
@@ -60,6 +61,7 @@ app.use('/api-doc',swaggerMiddleware)
 /**
  * Webapplication routes
  */
+app.use(cookieParser())
 app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
 app.use(i18n.init)

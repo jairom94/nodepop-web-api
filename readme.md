@@ -20,7 +20,7 @@ npm install
 
 > User to login default
 
-- email: admin@eexample.com
+- email: admin@example.com
 - password: 1234
 
 > User to login default

@@ -95,6 +95,16 @@
               <span><%= __('Sell or buy') %></span>
             </a>
           </div>
+          <div class="flex items-center justify-center">
+            <% getLocales().forEach( locale => { %>
+              <a class="flex flex-col items-center" href="/change-locale/<%= locale %>">
+                <img 
+                class="aspect-video object-contain transition-all duration-300 hover:scale-[1.10]"
+                src="/imgs/<%= locale %>.png" alt="<%= locale %>">
+                <span class="text-xs"><%= locale %></span>
+              </a>
+            <% }) %>
+          </div>          
         </div>
 
         <div class="line-2 flex items-center gap-3">
