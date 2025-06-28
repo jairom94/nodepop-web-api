@@ -72,16 +72,16 @@
           <div class="flex flex-col gap-2">
             <span><%= __('Categories') %></span>
             <div
-              class="dropdown-cont relative border rounded-lg overflow-hidden flex flex-col"
+              class="dropdown-cont flex"
             >            
               <select
-                class="focus:outline-none px-2 py-1"
+                class="focus:outline-none overflow-hidden px-2 py-1 border rounded-md flex-1"
                 name="tags[]"
                 id="categories"
                 multiple
               >                
                 <% tags.forEach(tag => { %>
-                <option value="<%= tag.name %>"><%= tag.name %></option>
+                <option value="<%= tag._id %>"><%= tag.name %></option>
                 <% }) %>
               </select>
             </div>
