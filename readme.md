@@ -20,8 +20,14 @@ npm install
 
 > User to login default
 
- - email: user1@mail.com
+- email: admin@eexample.com
 - password: 1234
+
+> User to login default
+
+- email: user1@example.com
+- password: 1234
+
 
  <img src="assets-readme/login.png" width="200" alt="login view">
 

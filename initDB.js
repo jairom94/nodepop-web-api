@@ -14,13 +14,13 @@ const initUsers = async () => {
         {
             name: 'Jairo',
             lastname_1: 'Moreno',
-            email: 'user1@mail.com',
+            email: 'admin@example.com',
             password: await User.hashPassword('1234')
         },
         {
             name: 'José',
             lastname_1: 'Padilla',
-            email: 'user2@mail.com',
+            email: 'user1@example.com',
             password: await User.hashPassword('1234')
         }
     ]);
