@@ -50,8 +50,8 @@ const initProducts = async () => {
     const productsDeleted = await Product.deleteMany();
     console.log(`Deleted ${productsDeleted.deletedCount} products.`)
     const [user1, user2] = await Promise.all([
-        User.findOne({ email: 'user1@mail.com' }),
-        User.findOne({ email: 'user2@mail.com' })
+        User.findOne({ email: 'admin@example.com' }),
+        User.findOne({ email: 'user1@example.com' })
     ])
     const tags = await Tag.find()
     const getTagID = (name = '') => {

@@ -27,7 +27,7 @@ function ModalDeleteController(container, buttonsToShow){
             <span>Alert</span>
         </h2>
         <form 
-        class='form-delete px-7 py-4 flex flex-col gap-4' method="get">
+        class='form-delete px-7 py-4 flex flex-col gap-4' method="post">
             <p class='message-delete text-xs text-gray-600'>                
             </p>
             <input type="hidden" name="allow" value="true">

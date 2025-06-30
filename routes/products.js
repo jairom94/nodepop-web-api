@@ -44,8 +44,8 @@ router.post(
 router.get('/:productID', productDetail)
 
 //Delete product
-router.get('/delete/:id', [
-    query('allow')
+router.post('/delete/:id', [
+    body('allow')
         .notEmpty()
         .withMessage('not must be empty')
         .custom((value) => value === 'true')

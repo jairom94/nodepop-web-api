@@ -4,6 +4,9 @@ import * as funcTools from "../lib/funcTools.js";
 
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
+import fs from 'node:fs/promises';
+import path from "node:path";
+
 
 export const productDetail = async (req, res, next) => {
   try {
@@ -34,6 +37,8 @@ export const productsGet = async (req, res, next) => {
 
     const { tags, sort, page } = req.query;
 
+    // console.log('path',import.meta.dirname)
+
     // console.log(page);
     const limit = 8
     const options = {
@@ -44,7 +49,7 @@ export const productsGet = async (req, res, next) => {
     };
 
     const filters = funcTools.buildProductFilters(req.query,user)
-    console.log({ filters, ...options });
+    // console.log({ filters, ...options });
     
     const count = await Product.countDocuments(filters)  
     // console.log('count',count)  
@@ -74,7 +79,7 @@ export const productsGet = async (req, res, next) => {
       }
     }
     
-    console.log(req.query);
+    // console.log(req.query);
     
     res.render("products",{query:req.query});
   } catch (error) {
@@ -129,11 +134,22 @@ export const deleteProduct = async (req, res, next) => {
       resultValidations.throw();
     }
     const { id } = req.params;
-    const { allow } = req.query;
+    const { allow } = req.body;
     if (allow) {
-      const productDelete = await Product.deleteOne({ _id: id });
-      console.log(productDelete);
-      res.redirect("/products");
+      const searchedProduct = await Product.findById(id);
+      await Product.deleteOne({ _id: id });
+      await fs.access(path.join(import.meta.dirname,'..','public','products',searchedProduct.image))
+      funcTools.deleteFileIfExist(`products/${searchedProduct.image}`)
+      const ext = path.extname(`products/${searchedProduct.image}`)
+      const thumbnailPath = searchedProduct.image.replace(ext,`_thumbnail${ext}`)
+      console.log('Immagen principal borrada')
+      console.log('revisioooooon',thumbnailPath)
+      console.log(path.join(import.meta.dirname,'..','public','products',thumbnailPath))
+      // await fs.access(path.join(import.meta.dirname,'..','public','products',thumbnailPath))
+      // funcTools.deleteFileIfExist(`products/${thumbnailPath}`)
+      console.log('Immagen thumbnail borrada')
+
+      res.redirect("back");
     }
   } catch (error) {
     next(error);

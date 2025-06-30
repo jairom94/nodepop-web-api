@@ -81,7 +81,7 @@
         <% if (currentPage > 1) { %>
           <a 
           class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
-          href="/products?page=<%= currentPage-1 %>">Prev</a>
+          href="/products?<%= new URLSearchParams({ ...query, page: currentPage-1 }).toString() %>">Prev</a>
         <% } %>
         <%for (let i = 1; i <= pages; i++) { %>
           <a 
@@ -91,7 +91,7 @@
         <% if (currentPage < pages) { %>
           <a 
           class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
-          href="/products?page=<%= `${parseInt(currentPage) + 1}` %>">Next</a>
+          href="/products?<%= new URLSearchParams({ ...query, page: parseInt(currentPage) + 1 }).toString() %>">Next</a>
         <% } %>
       </div>
       <% } %>
