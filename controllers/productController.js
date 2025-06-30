@@ -101,7 +101,7 @@ export const addProduct = async (req, res, next) => {
         path: "image",
         location: "body",
       };
-      validationWithFile(req, validations, newError);
+      funcTools.validationWithFile(req, validations, newError);
     }
 
     //lógica para add

@@ -27,6 +27,7 @@ import cookieParser from 'cookie-parser';
 import * as localeController from './controllers/localeController.js'
 import { body } from 'express-validator';
 import { validateProductPatch, validateProductPost, validateProductPut } from './validators/product-validator.js';
+import Tag from './models/Tag.js';
 
 
 
@@ -87,15 +88,19 @@ app.use((req,res,next)=>{
 
 
 
-app.use((err,req,res,next)=>{
+app.use(async (err,req,res,next)=>{
     // console.log(err);
     if(err.array){
         if (req.url.startsWith('/products/add')) {            
             const errors = err.array().map(e =>`${e.path} ${e.msg}`)
             const title = `We can´t ${req.url.split('/')[2]} product`
-            // req.flash('error',errors);  
-            // console.log(errors);
-            res.redirect('/products/add')
+            // req.flash('error',errors);
+            const tags = await Tag.find()
+            res.locals.tags = tags  
+            res.locals.errors = errors.join(',')
+
+            res.render('new-product')
+            // res.redirect('/products/add')
             return
         }
         if(req.url.startsWith('/api/')){

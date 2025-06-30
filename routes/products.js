@@ -17,6 +17,7 @@ router.get('/add',async (req,res,next)=>{
     try {
         const tags = await Tag.find()
         res.locals.tags = tags
+        res.locals.errors = ''
         res.render('new-product')
     } catch (error) {
         next(error)
