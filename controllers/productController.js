@@ -2,9 +2,8 @@ import Product from "../models/Product.js";
 import Tag from "../models/Tag.js";
 import * as funcTools from "../lib/funcTools.js";
 
-import { query, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
-import { Types } from "mongoose";
 
 export const productDetail = async (req, res, next) => {
   try {
@@ -114,8 +113,9 @@ export const addProduct = async (req, res, next) => {
       tags: tags.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
     };
     // console.log(newProduct);
-    const productInsert = await Product.insertOne(newProduct);
-    // console.log("producto nuevo", productInsert);
+    const productInsert = await Product.insertOne(newProduct);    
+        
+
     res.redirect(`/products/${productInsert.id}`);
   } catch (error) {
     next(error);

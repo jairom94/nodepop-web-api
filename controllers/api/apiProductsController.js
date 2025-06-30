@@ -1,8 +1,15 @@
-import { deleteFileIfExist, getTagID, parseToArray, validationWithFile, validationWithoutFile } from "../../lib/funcTools.js";
+import {
+  deleteFileIfExist,
+  getTagID,
+  parseToArray,
+  validationWithFile,
+  validationWithoutFile,
+} from "../../lib/funcTools.js";
 import Product from "../../models/Product.js";
 import { validationResult } from "express-validator";
 import Tag from "../../models/Tag.js";
 import createHttpError from "http-errors";
+import cote from 'cote';
 
 /**
  * @openapi
@@ -211,20 +218,39 @@ export async function newProduct(req, res, next) {
       };
       validationWithFile(req, validations, newError);
     }
-    
+
     const tagsDB = await Tag.find();
 
     const userId = req.apiUserId;
     const productRaw = req.body;
-    // console.log(productRaw);
-    // return
+    
     const { tags } = req.body;
     const product = new Product(productRaw);
     product.owner = userId;
     product.image = req.file.filename;
-    product.tags = parseToArray(tags)
-    .map((tag_name) => getTagID(tagsDB, tag_name)); 
+    product.tags = parseToArray(tags).map((tag_name) =>
+      getTagID(tagsDB, tag_name)
+    );
     const savedProduct = await product.save();
+
+    //creacion thumbnail
+    const requester = new cote.Requester({
+      name: "app",
+    });
+    
+    const event = {
+      type: "create",
+      productId: savedProduct.id,
+      imagePath: req.file.path,
+    };
+
+    requester.send(event, (err, result) => {
+      if (err) {
+        console.log("ERROR:", err);
+        return;
+      }
+      console.log("resultado:", result);
+    });
 
     res.status(201).json({ result: savedProduct });
   } catch (error) {
@@ -283,8 +309,8 @@ export async function newProduct(req, res, next) {
  *         description: No autorizado
  *       404:
  *         description: Producto no encontrado
- * 
- * 
+ *
+ *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
@@ -305,8 +331,9 @@ export async function update(req, res, next) {
     const productId = req.params.productId;
     const productRaw = req.body;
     productRaw.image = req.file.filename;
-    productRaw.tags = parseToArray(productRaw.tags)
-    .map((tag_name) => getTagID(tagsDB, tag_name)); 
+    productRaw.tags = parseToArray(productRaw.tags).map((tag_name) =>
+      getTagID(tagsDB, tag_name)
+    );
 
     const updateProduct = await Product.findOneAndUpdate(
       {
@@ -318,7 +345,7 @@ export async function update(req, res, next) {
         new: true,
       }
     );
-    res.json({result:updateProduct})
+    res.json({ result: updateProduct });
   } catch (error) {
     next(error);
   }
@@ -374,8 +401,8 @@ export async function update(req, res, next) {
  *         description: No autorizado
  *       404:
  *         description: Producto no encontrado
- * 
- * 
+ *
+ *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
@@ -383,17 +410,18 @@ export async function update(req, res, next) {
 export async function partialUpdate(req, res, next) {
   try {
     const validations = validationResult(req);
-    validationWithoutFile(validations)
+    validationWithoutFile(validations);
     const tagsDB = await Tag.find();
     const userId = req.apiUserId;
     const productId = req.params.productId;
     const productRaw = req.body;
-    if(req.file){
+    if (req.file) {
       productRaw.image = req.file.filename;
     }
-    if(typeof productRaw.tags === 'string' || Array.isArray(productRaw.tags)){
-      productRaw.tags = parseToArray(productRaw.tags)
-    .map((tag_name) => getTagID(tagsDB, tag_name)); 
+    if (typeof productRaw.tags === "string" || Array.isArray(productRaw.tags)) {
+      productRaw.tags = parseToArray(productRaw.tags).map((tag_name) =>
+        getTagID(tagsDB, tag_name)
+      );
     }
 
     const updateProduct = await Product.findOneAndUpdate(
@@ -406,13 +434,11 @@ export async function partialUpdate(req, res, next) {
         new: true,
       }
     );
-    res.json({result:updateProduct})
+    res.json({ result: updateProduct });
   } catch (error) {
     next(error);
   }
 }
-
-
 
 /**
  * @openapi
@@ -445,34 +471,32 @@ export async function partialUpdate(req, res, next) {
  *         description: No autorizado para eliminar este producto
  *       404:
  *         description: Producto no encontrado
- * 
- * 
+ *
+ *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
 export async function deleteProduct(req, res, next) {
-  try {    
+  try {
     const userId = req.apiUserId;
     const productId = req.params.productId;
-    
-    const searchedProduct = await Product.findById(productId)
-    if(!searchedProduct){
-      return next(createHttpError(404,'product no found'))      
+
+    const searchedProduct = await Product.findById(productId);
+    if (!searchedProduct) {
+      return next(createHttpError(404, "product no found"));
     }
-    if(searchedProduct.owner.toString() !== userId){
-      return next(createHttpError(401,'not allow this action'))
+    if (searchedProduct.owner.toString() !== userId) {
+      return next(createHttpError(401, "not allow this action"));
     }
 
     if (searchedProduct.image) {
-      deleteFileIfExist(`products/${searchedProduct.image}`)
+      deleteFileIfExist(`products/${searchedProduct.image}`);
     }
 
-    await Product.deleteOne({_id:productId})
+    await Product.deleteOne({ _id: productId });
 
-    res.json({message:`${searchedProduct.name} deleted success`})
-
-
+    res.json({ message: `${searchedProduct.name} deleted success` });
   } catch (error) {
     next(error);
   }
