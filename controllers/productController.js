@@ -138,16 +138,7 @@ export const deleteProduct = async (req, res, next) => {
     if (allow) {
       const searchedProduct = await Product.findById(id);
       await Product.deleteOne({ _id: id });
-      await fs.access(path.join(import.meta.dirname,'..','public','products',searchedProduct.image))
-      funcTools.deleteFileIfExist(`products/${searchedProduct.image}`)
-      const ext = path.extname(`products/${searchedProduct.image}`)
-      const thumbnailPath = searchedProduct.image.replace(ext,`_thumbnail${ext}`)
-      console.log('Immagen principal borrada')
-      console.log('revisioooooon',thumbnailPath)
-      console.log(path.join(import.meta.dirname,'..','public','products',thumbnailPath))
-      // await fs.access(path.join(import.meta.dirname,'..','public','products',thumbnailPath))
-      // funcTools.deleteFileIfExist(`products/${thumbnailPath}`)
-      console.log('Immagen thumbnail borrada')
+      await funcTools.deleteImageThumbnailProduct(searchedProduct.image)
 
       res.redirect("back");
     }

@@ -141,7 +141,8 @@ function ModalUpdateController(container, buttonsToShow){
       if(formUpdate instanceof HTMLFormElement){
         formUpdate.action = `action="/products/update/${productId}`
       }
-      ModalUpdate.showModal()
+      // ModalUpdate.showModal()
+      alert('funcion en desarrollo')
     })
     
   }) 

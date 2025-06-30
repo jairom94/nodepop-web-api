@@ -1,5 +1,6 @@
 import {
   deleteFileIfExist,
+  deleteImageThumbnailProduct,
   getTagID,
   parseToArray,
   validationWithFile,
@@ -491,7 +492,8 @@ export async function deleteProduct(req, res, next) {
     }
 
     if (searchedProduct.image) {
-      deleteFileIfExist(`products/${searchedProduct.image}`);
+      // deleteFileIfExist(`products/${searchedProduct.image}`);
+      deleteImageThumbnailProduct(searchedProduct.image)
     }
 
     await Product.deleteOne({ _id: productId });
