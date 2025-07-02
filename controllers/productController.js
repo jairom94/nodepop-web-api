@@ -87,13 +87,20 @@ export const productsGet = async (req, res, next) => {
   }
 };
 
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
 export const addProduct = async (req, res, next) => {
   // console.log(req.body);
 
   try {
     //validaciones
     const validations = validationResult(req);
-    if (!validations.isEmpty() || !req.file) {
+    if (!validations.isEmpty() || (!req.file && !req.body.imagePreview)) {
       const newError = {
         type: "field",
         value: undefined,
@@ -101,21 +108,43 @@ export const addProduct = async (req, res, next) => {
         path: "image",
         location: "body",
       };
+      // console.log('path de la imagen',req.file.path)
       funcTools.validationWithFile(req, validations, newError);
     }
+
+
 
     //lógica para add
     const { name, price, tags } = req.body;
 
-    const image = req.file.filename;
+    let image_;
+    if(req.body.imagePreview){
+      const [_,mimeType,imageBase64] = req.body.imagePreview.match(/^data:(.+);base64,(.+)$/);
+      if(mimeType){
+        const buffer = Buffer.from(imageBase64,'base64')
+        const fileName = `${Date.now()}image.${mimeType.split('/')[1]}`
+        const filePath = path.join(import.meta.dirname,'..','public','products',fileName)
+        await fs.writeFile(filePath,buffer)
+        image_ = fileName
+        // console.log(fileName);
+        req.file = {
+          filename: fileName,
+          path: filePath,
+          mimeType,
+        };
+      }
+    }else{
+      image_ = req.file.filename;
+    }
+    const image = image_//req.file.filename;
 
-    const tagsDB = await Tag.find();
+    // const tagsDB = await Tag.find();
     const newProduct = {
       name,
       price,
       owner: req.session.userID,
       image,
-      tags: tags.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
+      tags //tags.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
     };
     // console.log(newProduct);
     const productInsert = await Product.insertOne(newProduct);    

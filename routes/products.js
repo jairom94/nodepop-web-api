@@ -18,6 +18,12 @@ router.get('/add',async (req,res,next)=>{
         const tags = await Tag.find()
         res.locals.tags = tags
         res.locals.errors = ''
+        res.locals.oldData = {
+            name:'',
+            price:'',
+            tags:[]
+        }
+        res.locals.previewImage = null
         res.render('new-product')
     } catch (error) {
         next(error)

@@ -28,6 +28,8 @@ import * as localeController from './controllers/localeController.js'
 import { body } from 'express-validator';
 import { validateProductPatch, validateProductPost, validateProductPut } from './validators/product-validator.js';
 import Tag from './models/Tag.js';
+import { deleteFileIfExist } from './lib/funcTools.js';
+import { readFile } from 'node:fs/promises';
 
 
 
@@ -89,7 +91,7 @@ app.use((req,res,next)=>{
 
 
 app.use(async (err,req,res,next)=>{
-    // console.log(err);
+    
     if(err.array){
         if (req.url.startsWith('/products/add')) {            
             const errors = err.array().map(e =>`${e.path} ${e.msg}`)
@@ -97,9 +99,21 @@ app.use(async (err,req,res,next)=>{
             // req.flash('error',errors);
             const tags = await Tag.find()
             res.locals.tags = tags  
-            res.locals.errors = errors.join(',')
+            res.locals.errors = errors.join(',')                   
+            res.locals.oldData = req.body                        
+            if (!('tags' in req.body)) {
+                res.locals.oldData.tags = []
+            }
+            console.log(req.body);
+            
+            res.locals.previewImage = ''
+            if(req.file){
+                const buffer = await readFile(req.file.path)
+                res.locals.previewImage = `data:${req.file.mimetype};base64,${buffer.toString('base64')}`;
+                deleteFileIfExist(path.join('products',req.file.filename))
 
-            res.render('new-product')
+            }
+            res.status(406).render('new-product')
             // res.redirect('/products/add')
             return
         }
@@ -128,7 +142,8 @@ app.use(async (err,req,res,next)=>{
         return 
     }
 
-    //Respuesta para resto de errores
+    //Respuesta para resto de errores    
+    
     res.locals.error = err
     res.status(err.status || 500).render('error');
 })

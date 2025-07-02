@@ -85,7 +85,7 @@
         <% } %>
         <%for (let i = 1; i <= pages; i++) { %>
           <a 
-          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          class="<%= currentPage==i ? 'bg-emerald-700' : 'bg-emerald-500' %> text-gray-50 py-2 px-3 rounded-md" 
           href="/products?<%= new URLSearchParams({ ...query, page: i }).toString() %>"><%= i %></a>          
         <% } %>
         <% if (currentPage < pages) { %>

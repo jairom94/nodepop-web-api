@@ -26,6 +26,7 @@
               id="title"
               autocomplete="off"
               placeholder=" "
+              value="<%= oldData.name %>"
             />
             <label
               class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
@@ -49,6 +50,7 @@
               placeholder=" "
               autocomplete="off"
               pattern="^\d+\.\d{2}$"
+              value="<%= oldData.price %>"
             />
             <label
               class="absolute pointer-events-none transition-all duration-300 left-[3.5rem] top-3 peer-focus:top-0 peer-focus:text-xs"
@@ -68,10 +70,18 @@
                 type="file"
                 accept="image/*"
                 name="image"                
-                class="hidden"
+                class="image hidden"
               />
             </label>
-            <div class="preview-container hidden" id="preview-container-create"></div>
+            <div class="preview-container flex justify-center items-center shadow-xl relative <%= !previewImage ? 'hidden' : '' %>" id="preview-container-create">
+                <% if (previewImage) { %>
+                 <img class="aspect-video object-center object-contain" src="<%= previewImage %>" alt="Product image">
+                  <button type="button" class="btn-close-preview bg-red-500 hover:bg-red-600 transition-colors duration-300 cursor-pointer px-4 text-white font-medium py-2 absolute right-0 top-0">X</button>
+                <% } %>
+            </div>
+            <% if (previewImage) { %>
+              <input type="hidden" class="image-preview" name="imagePreview" value="<%= previewImage %>">
+            <% } %>
           </div>
           <div class="flex flex-col gap-2">
             <span><%= __('Categories') %></span>
@@ -85,7 +95,7 @@
                 multiple
               >                
                 <% tags.forEach(tag => { %>
-                <option value="<%= tag._id %>"><%= tag.name %></option>
+                <option value="<%= tag._id %>" <%= oldData.tags.includes(tag._id.toString()) ? 'selected' : '' %>><%= tag.name %></option>
                 <% }) %>
               </select>
             </div>
