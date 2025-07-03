@@ -6,8 +6,12 @@
     class="grid grid-cols-1 gap-5 md:gap-8 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]"
   >
     <div class="filters">
-      <h4 class="text-emerald-700 text-shadow-md text-shadow-emerald-200 text-2xl font-medium pb-3">Filtrado de productos</h4>
-      <form class="flex flex-col gap-5">
+      <h4 class="text-emerald-700 text-shadow-md text-shadow-emerald-200 text-2xl font-medium pb-3">
+        <button class="btn-show-filter cursor-pointer md:cursor-auto">
+          Filtrado de productos
+        </button>
+      </h4>
+      <form class="flex flex-col gap-5 h-0 md:h-auto md:overflow-visible overflow-hidden">
         <div class="flex flex-col gap-2">
           <label class="text-emerald-700 text-lg font-medium" for="name-filter">Nombre</label>
           <input
@@ -25,6 +29,17 @@
               <span class="query-price" data-min="<%= query.min %>" data-max="<%= query.max %>"></span>
               <input type="hidden" id="price-min" name="min" value="<%= query.min %>">
               <input type="hidden" id="price-max" name="max" value="<%= query.max %>">
+          </div>
+          <div class="flex flex-col gap-4">
+            <label class="text-emerald-700 text-lg font-medium">Categorias</label>
+            <div class="flex flex-col gap-2">              
+              <% headerCategories.forEach(tag => { %>
+               <label for="<%= `f-${tag}` %>">
+                <input type="checkbox" name="tags" value="<%= tag %>" id="<%= `f-${tag}` %>" <%= query.tags.includes(tag) ? 'checked' : '' %>>
+                <span class="text-emerald-800 font-light tracking-wide"><%= tag %></span>
+               </label>
+              <% }) %>
+            </div>
           </div>
           <div class="flex flex-col"> 
             <input 

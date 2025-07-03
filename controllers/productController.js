@@ -2,7 +2,7 @@ import Product from "../models/Product.js";
 import Tag from "../models/Tag.js";
 import * as funcTools from "../lib/funcTools.js";
 
-import { validationResult } from "express-validator";
+import { query, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 import fs from 'node:fs/promises';
 import path from "node:path";
@@ -35,11 +35,11 @@ export const productsGet = async (req, res, next) => {
   try {
     const user = req.session.userID;
 
-    const { tags, sort, page } = req.query;
+    const { sort, page } = req.query;
 
-    // console.log('path',import.meta.dirname)
-
-    // console.log(page);
+    // console.log(req.query);
+    
+    
     const limit = 8
     const options = {
       // Convierte limit y skip a número si existen
@@ -48,7 +48,7 @@ export const productsGet = async (req, res, next) => {
       ...(!!sort && { sort }),
     };
 
-    const filters = funcTools.buildProductFilters(req.query,user)
+    const filters = await funcTools.buildProductFilters(req.query,user)
     // console.log({ filters, ...options });
     
     const count = await Product.countDocuments(filters)  
@@ -67,7 +67,7 @@ export const productsGet = async (req, res, next) => {
     res.locals.pages = Math.ceil(count/options.limit)
     res.locals.currentPage = page ?? 1
 
-    res.locals.products = products;
+    res.locals.products = products;    
 
     const [priceRange] = await Product.priceRange(user)
     if (priceRange) {      
@@ -80,6 +80,11 @@ export const productsGet = async (req, res, next) => {
     }
     
     // console.log(req.query);
+    if(req.query.tags){
+      req.query.tags = funcTools.parseToArray(req.query.tags)
+    }else {
+      req.query.tags = []
+    }
     
     res.render("products",{query:req.query});
   } catch (error) {
@@ -144,7 +149,7 @@ export const addProduct = async (req, res, next) => {
       price,
       owner: req.session.userID,
       image,
-      tags //tags.map((tag_name) => funcTools.getTagID(tagsDB, tag_name)),
+      tags 
     };
     // console.log(newProduct);
     const productInsert = await Product.insertOne(newProduct);    

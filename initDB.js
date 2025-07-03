@@ -57,12 +57,13 @@ const initProducts = async () => {
     const getTagID = (name = '') => {
         return tags.find(t => t.name === name)?._id
     }
+    const numRandom = 50;
     const insertProducts = await Product.insertMany([
         {
             name: "Laptop Pro",
             price: 1500,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('work'),
                 getTagID('mobile')
@@ -72,7 +73,7 @@ const initProducts = async () => {
             name: "Smartphone X",
             price: 800,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('mobile'),
                 getTagID('lifestyle')
@@ -82,7 +83,7 @@ const initProducts = async () => {
             name: "Tablet S",
             price: 600,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('mobile'),
                 getTagID('work')
@@ -92,7 +93,7 @@ const initProducts = async () => {
             name: "Monitor HD",
             price: 350,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('work'),
                 getTagID('lifestyle')
@@ -102,7 +103,7 @@ const initProducts = async () => {
             name: "Smartwatch Z",
             price: 250,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('mobile'),
                 getTagID('lifestyle')
@@ -112,7 +113,7 @@ const initProducts = async () => {
             name: "Auriculares Pro",
             price: 150,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('lifestyle'),
                 getTagID('mobile')
@@ -122,7 +123,7 @@ const initProducts = async () => {
             name: "Teclado Mecánico",
             price: 120,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('work')
             ]
@@ -131,7 +132,7 @@ const initProducts = async () => {
             name: "Cámara Digital",
             price: 900,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('lifestyle'),
                 getTagID('mobile')
@@ -141,7 +142,7 @@ const initProducts = async () => {
             name: "Drone Explorer",
             price: 1100,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('motor'),
                 getTagID('lifestyle')
@@ -151,7 +152,7 @@ const initProducts = async () => {
             name: "Bicicleta Eléctrica",
             price: 1800,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [
                 getTagID('motor'),
                 getTagID('lifestyle')
@@ -161,196 +162,196 @@ const initProducts = async () => {
             name: "Drone 4K",
             price: 759,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor'), getTagID('lifestyle')]
         },
         {
             name: "Wireless Headphones",
-            price: 299,
+            price: 123,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('lifestyle')]
         },
         {
             name: "Smart Watch Pro",
             price: 349,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('work')]
         },
         {
             name: "Electric Scooter",
-            price: 699,
+            price: 234,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor'), getTagID('mobile')]
         },
         {
             name: "DSLR Camera",
-            price: 1299,
+            price: 345,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Gaming Console",
-            price: 499,
+            price: 234,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "VR Headset",
-            price: 599,
+            price: 123,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle'), getTagID('work')]
         },
         {
             name: "Robot Vacuum",
-            price: 399,
+            price: 231,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Portable Projector",
-            price: 399,
+            price: 321,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('work'), getTagID('mobile')]
         },
         {
             name: "Electric Grill",
-            price: 199,
+            price: 234,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Fitness Tracker",
             price: 129,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('lifestyle')]
         },
         {
             name: "Car GPS",
             price: 159,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor')]
         },
         {
             name: "Bluetooth Speaker",
             price: 89,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Electric Skateboard",
-            price: 799,
+            price: 72,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor'), getTagID('lifestyle')]
         },
         {
             name: "Dash Cam",
             price: 149,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor')]
         },
         {
             name: "3D Printer",
             price: 450,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('work'), getTagID('lifestyle')]
         },
         {
             name: "Camping Tent",
             price: 220,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Noise-Canceling Earbuds",
             price: 179,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('lifestyle')]
         },
         {
             name: "Electric Kettle",
             price: 45,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Action Camera",
             price: 299,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('motor')]
         },
         {
             name: "Mechanical Keyboard",
             price: 120,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('work')]
         },
         {
             name: "Car Jump Starter",
-            price: 99,
+            price: numRandom,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor')]
         },
         {
             name: "Wireless Charger",
             price: 35,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile')]
         },
         {
             name: "Laser Printer",
             price: 230,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('work')]
         },
         {
             name: "Electric Bike",
             price: 1500,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('motor'), getTagID('lifestyle')]
         },
         {
             name: "Smart Mirror",
             price: 600,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle'), getTagID('work')]
         },
         {
             name: "Air Purifier",
             price: 200,
             owner: user2._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('lifestyle')]
         },
         {
             name: "Satellite Phone",
-            price: 999,
+            price: 239,
             owner: user1._id,
-            image: `https://picsum.photos/id/${Math.floor(Math.random() * 99) + 1}/600/400`,
+            image: `https://picsum.photos/id/${Math.floor(Math.random() * numRandom) + 1}/600/400`,
             tags: [getTagID('mobile'), getTagID('work')]
         }
     ]);

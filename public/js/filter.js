@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const max = queryPrice.dataset.max
 //   console.log(min,max)
 //   console.log(minPrice,maxPrice)
+const btnFilter = document.querySelector('.btn-show-filter')
 
   noUiSlider.create(stepsSlider, {
     start: [min || minPrice, max || maxPrice],
