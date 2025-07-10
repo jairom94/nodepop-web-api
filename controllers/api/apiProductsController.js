@@ -149,9 +149,10 @@ export async function list(req, res, next) {
 export async function getOne(req, res, next) {
   try {
     const productId = req.params.productId;
-    const userId = req.apiUserId;
+    const userId = req.apiUserId || req.session.userID;
 
-    const product = await Product.findOne({ _id: productId, owner: userId });
+    const product = await Product.findOne({ _id: productId, owner: userId })
+    .populate('tags');
     res.json({ result: product });
   } catch (error) {
     next(error);

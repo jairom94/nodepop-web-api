@@ -15,7 +15,7 @@
 }
 
 .modal{
-  @apply left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-md overflow-hidden;
+  @apply left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-md;
   &::backdrop{
     @apply bg-gray-900/25 backdrop-blur-md;
   }

@@ -50,7 +50,7 @@ export const productsGet = async (req, res, next) => {
 
     const filters = await funcTools.buildProductFilters(req.query,user)
     // console.log({ filters, ...options });
-    
+    console.log(filters)
     const count = await Product.countDocuments(filters)  
     // console.log('count',count)  
 

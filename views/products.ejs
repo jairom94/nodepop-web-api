@@ -5,24 +5,28 @@
   <section
     class="grid grid-cols-1 gap-5 md:gap-8 max-w-[80vw] m-[0_auto] md:max-w-[90vw] md:grid-cols-[300px_1fr]"
   >
+    <!-- FILTROS -->
     <div class="filters">
       <h4 class="text-emerald-700 text-shadow-md text-shadow-emerald-200 text-2xl font-medium pb-3">
-        <button class="btn-show-filter cursor-pointer md:cursor-auto">
+        <button class="md:hidden btn-show-filter cursor-pointer transition-all duration-300 hover:underline">
           Filtrado de productos
         </button>
+        <span class="hidden md:inline-block">
+          Filtrado de productos
+        </span>
       </h4>
-      <form class="flex flex-col gap-5 h-0 md:h-auto md:overflow-visible overflow-hidden">
+      <form class="form-filter transition-all duration-300 flex flex-col gap-5 h-0 md:h-auto md:overflow-visible overflow-hidden">
         <div class="flex flex-col gap-2">
           <label class="text-emerald-700 text-lg font-medium" for="name-filter">Nombre</label>
           <input
-          value="<%= query.name %>" 
+          value="<%= query.name %>"
           class="border border-emerald-500 outline-emerald-600 rounded-md px-3 py-2"
           type="text" name="name" id="name-filter">
-          
+
         </div>
         <div>
           <legend class="text-emerald-700 text-lg font-medium">Range Price</legend>
-          <div class="pt-[3rem] pb-5">
+          <div class="pt-[3rem] pb-5 px-8 md:px-0">
             <div id="steps-slider"></div>
           </div>
               <span class="price-range" data-min-price="<%= priceRange.minPrice %>" data-max-price="<%= priceRange.maxPrice %>"></span>
@@ -32,7 +36,7 @@
           </div>
           <div class="flex flex-col gap-4">
             <label class="text-emerald-700 text-lg font-medium">Categorias</label>
-            <div class="flex flex-col gap-2">              
+            <div class="flex flex-col gap-2">
               <% headerCategories.forEach(tag => { %>
                <label for="<%= `f-${tag}` %>">
                 <input type="checkbox" name="tags" value="<%= tag %>" id="<%= `f-${tag}` %>" <%= query.tags.includes(tag) ? 'checked' : '' %>>
@@ -41,13 +45,14 @@
               <% }) %>
             </div>
           </div>
-          <div class="flex flex-col"> 
-            <input 
-            class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md hover:bg-emerald-800 transition-colors duration-300 cursor-pointer" 
+          <div class="flex flex-col">
+            <input
+            class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md hover:bg-emerald-800 transition-colors duration-300 cursor-pointer"
             type="submit" value="Filtrar">
           </div>
       </form>
-    </div>    
+    </div>
+    <!-- LIST PRODUCTS -->
     <div class="flex flex-col">
       <ul class="flex-1 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         <% products.forEach(p => { %>
@@ -60,11 +65,11 @@
                 alt="<%= p.name %>"
               />
               <div class="pointer-events-none flex gap-2 justify-center items-center backdrop-blur-xs transition-opacity duration-300 absolute inset-0 opacity-0 bg-gray-500/35 group-hover:opacity-100">
-                <button 
+                <button
                 data-productid="<%= p.id %>"
                 data-productname="<%= p.name %>"
                 class="delete cursor-pointer bg-red-500 px-4 py-2 rounded-lg text-white hover:bg-red-800 transition-colors duration-300 pointer-events-auto">Borrar</button>
-                <button 
+                <button
                 data-productid="<%= p.id %>"
                 data-productname="<%= p.name %>"
                 class="update cursor-pointer bg-sky-700 px-4 py-2 rounded-lg text-white hover:bg-sky-400 transition-colors duration-300 pointer-events-auto">Editar</button>
@@ -80,7 +85,7 @@
               <ul class="flex gap-2 pt-2">
                   <% p.tags.forEach(tag => { %>
                   <li
-                    class="rounded-xl border border-emerald-500 px-2 text-sm text-emerald-800"                
+                    class="rounded-xl border border-emerald-500 px-2 text-sm text-emerald-800"
                   >
                     <%= tag.name %>
                   </li>
@@ -94,23 +99,23 @@
       <% if (pages > 1) { %>
        <div class="pagination flex gap-3 pt-5">
         <% if (currentPage > 1) { %>
-          <a 
-          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          <a
+          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md"
           href="/products?<%= new URLSearchParams({ ...query, page: currentPage-1 }).toString() %>">Prev</a>
         <% } %>
         <%for (let i = 1; i <= pages; i++) { %>
-          <a 
-          class="<%= currentPage==i ? 'bg-emerald-700' : 'bg-emerald-500' %> text-gray-50 py-2 px-3 rounded-md" 
-          href="/products?<%= new URLSearchParams({ ...query, page: i }).toString() %>"><%= i %></a>          
+          <a
+          class="<%= currentPage==i ? 'bg-emerald-700' : 'bg-emerald-500' %> text-gray-50 py-2 px-3 rounded-md"
+          href="/products?<%= new URLSearchParams({ ...query, page: i }).toString() %>"><%= i %></a>
         <% } %>
         <% if (currentPage < pages) { %>
-          <a 
-          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md" 
+          <a
+          class="bg-emerald-500 text-gray-50 py-2 px-3 rounded-md"
           href="/products?<%= new URLSearchParams({ ...query, page: parseInt(currentPage) + 1 }).toString() %>">Next</a>
         <% } %>
       </div>
       <% } %>
-      
+
     </div>
   </section>
 </main>
@@ -122,5 +127,5 @@
     <script type="module" src="/js/filter.js"></script>
   </body>
 </html>
-<%- //include('partials/footer.ejs') %> 
+<%- //include('partials/footer.ejs') %>
 <%- //include('scripts/script_products.ejs',{}) %>

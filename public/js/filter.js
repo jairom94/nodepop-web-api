@@ -12,6 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
 //   console.log(min,max)
 //   console.log(minPrice,maxPrice)
 const btnFilter = document.querySelector('.btn-show-filter')
+if(btnFilter instanceof HTMLButtonElement){
+  btnFilter.addEventListener('click',()=>{
+    const formFilter = document.querySelector('.form-filter')
+    // formFilter.classList.add('h-auto')    
+    if(formFilter.classList.contains('h-0')){
+      formFilter.classList.remove('h-0')
+      formFilter.classList.add('h-full')    
+    }else {
+      formFilter.classList.remove('h-full')
+      formFilter.classList.add('h-0')          
+    }
+    
+    // console.log(formFilter);
+    
+  })
+}
 
   noUiSlider.create(stepsSlider, {
     start: [min || minPrice, max || maxPrice],
