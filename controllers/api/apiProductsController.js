@@ -317,7 +317,7 @@ export async function newProduct(req, res, next) {
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-export async function update(req, res, next) {
+export async function update(req, res, next) {  
   try {
     const validations = validationResult(req);
     const newError = {
@@ -409,12 +409,13 @@ export async function update(req, res, next) {
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-export async function partialUpdate(req, res, next) {
+export async function partialUpdate(req, res, next) {  
   try {
+    
     const validations = validationResult(req);
     validationWithoutFile(validations);
     const tagsDB = await Tag.find();
-    const userId = req.apiUserId;
+    const userId = req.apiUserId || req.session.userID;;
     const productId = req.params.productId;
     const productRaw = req.body;
     if (req.file) {
