@@ -410,21 +410,28 @@ export async function update(req, res, next) {
  * @param {import("express").NextFunction} next
  */
 export async function partialUpdate(req, res, next) {  
-  try {
-    
+  try {    
     const validations = validationResult(req);
     validationWithoutFile(validations);
     const tagsDB = await Tag.find();
     const userId = req.apiUserId || req.session.userID;;
     const productId = req.params.productId;
     const productRaw = req.body;
+    
+    
     if (req.file) {
       productRaw.image = req.file.filename;
     }
     if (typeof productRaw.tags === "string" || Array.isArray(productRaw.tags)) {
-      productRaw.tags = parseToArray(productRaw.tags).map((tag_name) =>
-        getTagID(tagsDB, tag_name)
-      );
+      const tagsRaw = parseToArray(productRaw.tags)                
+      if(tagsRaw.every(t => Product.isObjectId(t))){
+        productRaw.tags = tagsRaw
+      }else{
+        productRaw.tags = tagsRaw.map((tag_name) =>
+          getTagID(tagsDB, tag_name)
+        );
+      }
+      
     }
 
     const updateProduct = await Product.findOneAndUpdate(

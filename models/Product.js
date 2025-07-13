@@ -30,13 +30,7 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.statics.list = function ({...args}) {
-    const filters = { ...args?.['filters'] || {} };
-    // if (filters.name) {        
-    //     filters.name = {
-    //         $regex: `^${filters.name}`, // '^' indica el inicio de la cadena.
-    //         $options: 'i'               // 'i' hace la búsqueda case-insensitive (ignora mayúsculas/minúsculas).
-    //     };
-    // }
+    const filters = { ...args?.['filters'] || {} };    
     const query = Product.find(filters);
     // const query = Product.find(args?.['filter'])
     query.limit(args?.['limit'])
@@ -64,6 +58,12 @@ productSchema.statics.priceRange = function(userId) {
         ])
 }
 
+productSchema.statics.isObjectId = function(value){
+  return Types.ObjectId.isValid(value) &&
+  Types.ObjectId.createFromHexString(value).toString() === value
+}
+
 const Product = mongoose.model('Product',productSchema);
 
 export default Product;
+

@@ -80,8 +80,9 @@ function ModalDeleteController(container, buttonsToShow){
  * @param {NodeListOf<HTMLButtonElement>} buttonsToShow 
  */
 function ModalUpdateController(container, buttonsToShow){
+  const stateProduct = ProductState()
   const ModalUpdate = document.createElement("dialog");
-  ModalUpdate.classList.add("modal");    
+  ModalUpdate.classList.add("modal");      
   ModalUpdate.innerHTML = `
         <div class='px-4 py-3 min-w-[50vw] md:min-w-[400px]'>
         <div>
@@ -173,19 +174,22 @@ function ModalUpdateController(container, buttonsToShow){
       }
       try {
         const productId = this.querySelector('#product-id').value || ''
-        const oldProduct = await getProductToUpdate(productId)
-        // const compare = Object.entries(result)
-        // console.log(formClean,oldProduct);
-        delete formClean.productId
-        // console.log(Object.entries(formClean));
-        // console.log('Es array',Array.isArray(oldProduct.result['tags']));
+        let oldProduct; //= await getProductToUpdate(productId)        
+        if(stateProduct.hasData()){
+          oldProduct = stateProduct.getValue()
+        }else{
+          const { result } = await getProductToUpdate(productId)
+          oldProduct = result
+        }        
         
+        delete formClean.productId
+
         const compare = Object.entries(formClean).every(([key,value]) => {          
           // console.log(key,value);          
-          if(Array.isArray(oldProduct.result[key])){            
-            return compareTo(value,oldProduct.result[key].map(el => el._id))
+          if(Array.isArray(oldProduct[key])){            
+            return compareTo(value,oldProduct[key].map(el => el._id))
           }          
-          return value === oldProduct.result[key].toString()
+          return value === oldProduct[key].toString()
         })
         if(compare){
           formUpdate.reset()                    
@@ -193,27 +197,34 @@ function ModalUpdateController(container, buttonsToShow){
           return
         }
 
-        if (formClean.name === oldProduct.result.name) {
+        if (formClean.name === oldProduct.name) {
           delete formClean.name
         }
-        if (formClean.price === oldProduct.result.price.toString()) {
+        if (formClean.price === oldProduct.price.toString()) {
           delete formClean.price
         }else{
           formClean.price = Number(formClean.price)
         }
-        if(compareTo(formClean.tags,oldProduct.result.tags.map(el => el._id))){
+        if(compareTo(formClean.tags,oldProduct.tags.map(el => el._id))){
           delete formClean.tags
         }
 
         formClean.id = productId
-        // console.log(formClean);
-
-        await updateProduct(formClean)
-        formUpdate.reset()
-        ModalUpdate.close()
-        window.location.reload()
-
         
+        const formToSend = new FormData()
+        Object.entries(formClean).forEach(([key,value])=>{
+          console.log(key,value)
+          if(Array.isArray(value)){
+            value.forEach(item => formToSend.append(`${key}[]`,item))
+          }else{
+            formToSend.append(key,value)
+          }
+        })
+        // return
+        await updateProduct(formToSend,productId)
+        // formUpdate.reset()
+        ModalUpdate.close()
+        window.location.reload()        
       } catch (error) {
         alert('Error:',error)
       }
@@ -225,18 +236,14 @@ function ModalUpdateController(container, buttonsToShow){
       e.preventDefault()
       e.stopPropagation()
       // const formUpdate = ModalUpdate.querySelector('.form-update')  
-      const productId = btnUpdate.dataset.productid;
-      // const productName = btnUpdate.dataset.productname;
-      // if(formUpdate instanceof HTMLFormElement){
-      //   formUpdate.action = `action="/products/update/${productId}`
-      // }
-      // ModalUpdate.showModal()      
+      const productId = btnUpdate.dataset.productid;  
       try {
         const productIdInput = ModalUpdate.querySelector('#product-id')
         if(productIdInput instanceof HTMLInputElement){
           productIdInput.value = productId
         }
         const { result } = await getProductToUpdate(productId)
+        stateProduct.setValue(result)
         const nameEdit = ModalUpdate.querySelector('#name-edit')
         nameEdit.value = result.name
         const priceEdit = ModalUpdate.querySelector('#price-edit')
@@ -313,17 +320,30 @@ function compareTo(arr1,arr2){
 
 /**
  * 
- * @param {*} product 
+ * @param {FormData} formToUpdate 
+ * @param {string} id 
  */
-async function updateProduct(product){
-  const url = `/api/products/${product.id}`
+async function updateProduct(formToUpdate,id){  
+  const url = `/api/products/${id}`
   const response = await fetch(url,{
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json' // indica que el cuerpo será JSON
-    },
-  body: JSON.stringify(product)
+    body: formToUpdate
   })
   const productUpdated = await response.json()
   return productUpdated 
+}
+
+function ProductState(){
+  let product;
+  return {
+    hasData(){
+      return product !== undefined || product !== null
+    },    
+    setValue(value){
+      product = value
+    },
+    getValue(){
+      return product
+    }
+  }
 }
