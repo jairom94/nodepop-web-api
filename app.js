@@ -26,12 +26,11 @@ import swaggerMiddleware from './lib/swaggerMiddleware.js';
 import i18n from './lib/i18nConfigure.js';
 import cookieParser from 'cookie-parser';
 import * as localeController from './controllers/localeController.js'
-import { body } from 'express-validator';
+// import { body } from 'express-validator';
 import { validateProductPatch, validateProductPost, validateProductPut } from './validators/product-validator.js';
 import Tag from './models/Tag.js';
 import { deleteFileIfExist } from './lib/funcTools.js';
 import { readFile } from 'node:fs/promises';
-
 
 
 await connectMongoose();
@@ -57,15 +56,14 @@ app.use(sessionManager.useSessionInViews);
 /**
  * API routes
  */
-app.post('/api/login',apiLoginController.loginJWT)
+app.get('/api/resources/tags'     ,apiResourcesController.TagsResource)
+app.post('/api/login'             ,apiLoginController.loginJWT)
 app.get('/api/products'           ,jwtAuth.guard,apiProductController.list)
 app.get('/api/products/:productId',jwtAuth.guard,apiProductController.getOne)
 app.post('/api/products',          jwtAuth.guard,upload.single('image'),validateProductPost,apiProductController.newProduct)
 app.put('/api/products/:productId',jwtAuth.guard,upload.single('image'),validateProductPut,apiProductController.update)
 app.patch('/api/products/:productId',jwtAuth.guard,upload.single('image'),validateProductPatch,apiProductController.partialUpdate)
 app.delete('/api/products/:productId',jwtAuth.guard,apiProductController.deleteProduct)
-
-app.get('/api/resources/tags',apiResourcesController.TagsResource)
 
 app.use('/api-doc',swaggerMiddleware)
 /**
@@ -124,7 +122,8 @@ app.use(async (err,req,res,next)=>{
         }
         if(req.url.startsWith('/api/')){
             const errors = err.array().map(e => ({field:e.path,msg:e.msg}))
-            res.json({errors})
+            console.log({errors});
+            res.status(400).json({errors})
             return
         }
     }

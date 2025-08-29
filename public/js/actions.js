@@ -327,6 +327,9 @@ async function updateProduct(formToUpdate,id){
   const url = `/api/products/${id}`
   const response = await fetch(url,{
     method: 'PATCH',
+    headers:{
+      "Content-Type": "multipart/form-data"
+    },
     body: formToUpdate
   })
   const productUpdated = await response.json()

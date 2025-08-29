@@ -11,7 +11,7 @@
                             <figure>
                                 <div>
                                     <img 
-                                    class="rounded-md"
+                                    class="rounded-md aspect-video object-cover"
                                     src="<%= p.image %>" alt="<%= p.name %>">
                                 </div>
                                 <figcaption class="text-gray-700 text-xs">
@@ -35,7 +35,7 @@
                             <figure>
                                 <div>
                                     <img 
-                                    class="rounded-md"
+                                    class="rounded-md aspect-video object-cover"
                                     src="<%= p.image %>" alt="<%= p.name %>">
                                 </div>
                                 <figcaption class="text-gray-700 text-xs">
@@ -53,8 +53,31 @@
             </article>
         </section>
     </main>
+    <%- include('partials/footer.ejs') %>
+    <div class="fixed flex flex-col p-2 z-50 w-[300px] h-[400px] right-0 bottom-0 bg-amber-300">
+        <div>
+            <ul class="users-online">
+
+            </ul>
+        </div>
+        <div class="bg-indigo-300 flex-1">
+            <ul class="messages" data-user="<%= session.userID %>"></ul>
+        </div>
+        <div class="flex">
+            <input 
+            class="txt-message bg-white border px-2 py-1 flex-1"
+            type="text" name="message" id="message">
+            <button class="send-message bg-emerald-900 rounded-md cursor-pointer px-3 hover:bg-emerald-600 transition-colors duration-300">
+                <div class="text-white text-lg flex justify-center items-center">
+                    <iconify-icon icon="iconoir:send-solid"></iconify-icon>
+                </div>
+            </button>
+        </div>
+    </div>
     </div>
     <script type="module" src="/js/hero.js"></script>
+    <script src="/socket.io/socket.io.js"></script>    
+    <script src="/js/socket-client.js" defer></script>    
   </body>
 </html>
 

@@ -68,9 +68,10 @@ import cote from 'cote';
 export async function list(req, res, next) {
   try {
     const userId = req.apiUserId;
-
+    // console.log(userId);
+    
     const { name, tags, limit, skip, sort } = req.query;
-    const filter = {
+    const filters = {
       owner: userId,
       // Sólo añade `name` si name !== undefined
       ...(!!name && { name }),
@@ -83,8 +84,9 @@ export async function list(req, res, next) {
       ...(!!skip && { skip: parseInt(skip, 10) }),
       ...(!!sort && { sort }),
     };
-
-    const products = await Product.list({ filter, ...options });
+    // console.log(filter);
+    
+    const products = await Product.list({ filters, ...options });
     const result = { results: products };
     res.json(result);
   } catch (error) {
@@ -150,9 +152,16 @@ export async function getOne(req, res, next) {
   try {
     const productId = req.params.productId;
     const userId = req.apiUserId || req.session.userID;
+    // console.log(req.apiUserId);
+    // console.log(req.session.userID);
+    
 
-    const product = await Product.findOne({ _id: productId, owner: userId })
-    .populate('tags');
+    const product = await Product.findOne({ 
+      _id: productId,
+       owner: userId 
+      })
+    .select('-__v')
+    .populate({ path: 'tags', select: 'name _id' });
     res.json({ result: product });
   } catch (error) {
     next(error);
@@ -161,7 +170,7 @@ export async function getOne(req, res, next) {
 
 /**
  * @openapi
- * /products:
+ * /api/products/:
  *   post:
  *     summary: Crea un nuevo producto para el usuario autenticado
  *     tags:
@@ -230,9 +239,13 @@ export async function newProduct(req, res, next) {
     const product = new Product(productRaw);
     product.owner = userId;
     product.image = req.file.filename;
-    product.tags = parseToArray(tags).map((tag_name) =>
-      getTagID(tagsDB, tag_name)
-    );
+    const tagsRaw = parseToArray(JSON.parse(tags)) 
+    product.tags = tagsRaw.every(t=>typeof t === 'object')
+    ? tagsRaw.map(({_id})=>_id) 
+    : tagsRaw.map((tag_name) => getTagID(tagsDB, tag_name));
+    // console.log(product);
+    
+    // return
     const savedProduct = await product.save();
 
     //creacion thumbnail
@@ -254,7 +267,8 @@ export async function newProduct(req, res, next) {
       console.log("resultado:", result);
     });
 
-    res.status(201).json({ result: savedProduct });
+    const populatedProduct = await savedProduct.populate('tags', '_id name');
+    res.status(201).json({ result: populatedProduct });
   } catch (error) {
     next(error);
   }
@@ -262,7 +276,7 @@ export async function newProduct(req, res, next) {
 
 /**
  * @openapi
- * /products/{productId}:
+ * /api/products/{productId}:
  *   put:
  *     summary: Actualiza un producto del usuario autenticado
  *     tags:
@@ -318,7 +332,8 @@ export async function newProduct(req, res, next) {
  * @param {import("express").NextFunction} next
  */
 export async function update(req, res, next) {  
-  try {
+  try {    
+    // console.log(req.body);
     const validations = validationResult(req);
     const newError = {
       type: "field",
@@ -327,15 +342,23 @@ export async function update(req, res, next) {
       path: "image",
       location: "body",
     };
-    validationWithFile(req, validations, newError);
+    const { image } = req.body
+    const productId = req.params.productId;    
+    let prevImage = ''
+    if(image){
+      const { image:oldImage } = await Product.findById(productId);
+      prevImage = oldImage
+    }    
+    validationWithFile(req, validations, newError,prevImage);        
+    
     const tagsDB = await Tag.find();
     const userId = req.apiUserId;
-    const productId = req.params.productId;
-    const productRaw = req.body;
-    productRaw.image = req.file.filename;
-    productRaw.tags = parseToArray(productRaw.tags).map((tag_name) =>
-      getTagID(tagsDB, tag_name)
-    );
+    
+    const productRaw = req.body;          
+    const { tags } = req.body
+    productRaw.tags = tags.map(t=>getTagID(tagsDB,t))
+    
+    productRaw.image = image ? image : req.file.filename;
 
     const updateProduct = await Product.findOneAndUpdate(
       {
@@ -346,7 +369,11 @@ export async function update(req, res, next) {
       {
         new: true,
       }
-    );
+    )
+    .select('-owner -__v')
+    .populate({ path: 'tags', select: 'name _id' });
+    // console.log(updateProduct);
+    
     res.json({ result: updateProduct });
   } catch (error) {
     next(error);
@@ -355,7 +382,7 @@ export async function update(req, res, next) {
 
 /**
  * @openapi
- * /products/{productId}:
+ * /api/products/{productId}:
  *   patch:
  *     summary: Actualiza parcialmente un producto del usuario autenticado
  *     tags:
@@ -452,7 +479,7 @@ export async function partialUpdate(req, res, next) {
 
 /**
  * @openapi
- * /products/{productId}:
+ * /api/products/{productId}:
  *   delete:
  *     summary: Elimina un producto del usuario autenticado
  *     tags:

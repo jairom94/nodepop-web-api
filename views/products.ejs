@@ -56,8 +56,8 @@
     <div class="flex flex-col">
       <ul class="flex-1 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         <% products.forEach(p => { %>
-        <li class="transition-all duration-300 hover:scale-[1.01] group">
-          <a href="<%= `/products/${p.id}` %>">
+        <li class="border border-gray-300 shadow-xs p-2 rounded-md transition-all duration-300 hover:scale-[1.01] group flex flex-col">
+          <a class="flex-1 flex flex-col" href="<%= `/products/${p.id}` %>">
             <figure class="relative group overflow-hidden rounded-md">
               <img
                 class="aspect-video w-full rounded-[inherit] object-cover object-center"
@@ -75,22 +75,24 @@
                 class="update cursor-pointer bg-sky-700 px-4 py-2 rounded-lg text-white hover:bg-sky-400 transition-colors duration-300 pointer-events-auto">Editar</button>
               </div>
             </figure>
-            <div>
-              <h2 class="text-2xl font-medium"><%= p.name %></h2>
-              <h3
-                class="text-xl font-bold text-red-700 group-hover:text-red-500"
-              >
-                <%= p.price %> €
-              </h3>
-              <ul class="flex gap-2 pt-2">
-                  <% p.tags.forEach(tag => { %>
-                  <li
-                    class="rounded-xl border border-emerald-500 px-2 text-sm text-emerald-800"
-                  >
-                    <%= tag.name %>
-                  </li>
-                  <% }) %>
-              </ul>
+            <div class="flex-1 flex flex-col justify-between">
+              <h2 class="text-lg font-medium"><%= p.name %></h2>
+              <div>
+                <h3
+                  class="text-xl font-bold text-red-700 group-hover:text-red-500"
+                >
+                  <%= p.price %> €
+                </h3>
+                <ul class="flex gap-2 pt-2">
+                    <% p.tags.forEach(tag => { %>
+                    <li
+                      class="rounded-xl border border-emerald-500 px-2 text-sm text-emerald-800"
+                    >
+                      <%= tag.name %>
+                    </li>
+                    <% }) %>
+                </ul>
+              </div>
             </div>
           </a>
         </li>

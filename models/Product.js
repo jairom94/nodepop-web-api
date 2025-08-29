@@ -31,13 +31,16 @@ const productSchema = new mongoose.Schema({
 
 productSchema.statics.list = function ({...args}) {
     const filters = { ...args?.['filters'] || {} };    
+    // console.log(filters);
+    
     const query = Product.find(filters);
     // const query = Product.find(args?.['filter'])
     query.limit(args?.['limit'])
     query.skip(args?.['skip'])
     query.sort(args?.['sort'])
     query.select(args?.['fields'])
-    query.populate('tags')    
+    query.select('-__v')
+    query.populate({ path: 'tags', select: 'name _id' })    
     return query.exec()            
 }
 

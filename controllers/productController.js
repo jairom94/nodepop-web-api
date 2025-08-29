@@ -15,7 +15,7 @@ export const productDetail = async (req, res, next) => {
       "tags",
       "name -_id"
     );
-    console.log(product);
+    // console.log(product);
 
     res.locals.product = product;
     res.render("product");

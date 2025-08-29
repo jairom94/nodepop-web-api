@@ -10,10 +10,14 @@ export const logginPost = async (req, res, next) => {
             res.locals.email = email
             return res.status(401).render('login')            
         }
-        console.log(`${user.name} ${user.lastname_1}`);
+        // console.log(`${user.name} ${user.lastname_1}`);
         
         req.session.fullname = `${user.name} ${user.lastname_1}`
         req.session.userID = user._id
+        req.session.user = {
+            id:user._id,
+            fullname:`${user.name} ${user.lastname_1}`
+        }
         const to = req.query.from ?? '/'
         res.redirect(to)
     } catch (error) {
@@ -25,7 +29,7 @@ export const logginGet = (req, res, next) => {
     res.locals.error = '';
     res.locals.email = '';       
     if(req.session.userID){
-        console.log(req.session.userID);
+        // console.log(req.session.userID);
         
         res.redirect('/profile');
         return
