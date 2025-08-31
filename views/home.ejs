@@ -54,14 +54,35 @@
         </section>
     </main>
     <%- include('partials/footer.ejs') %>
-    <div class="fixed flex flex-col p-2 z-50 w-[300px] h-[400px] right-0 bottom-0 bg-amber-300">
-        <div>
+    <div class="fixed flex flex-col p-2 z-50 w-[300px] h-[450px] right-0 bottom-0 bg-amber-300">
+        <div class="flex-1">
             <ul class="users-online">
 
             </ul>
         </div>
-        <div class="bg-indigo-300 flex-1">
-            <ul class="messages" data-user="<%= session.userID %>"></ul>
+        <div class="bg-indigo-300 h-[300px] flex items-end">
+            <ul class="messages flex-1 max-h-[300px] overflow-y-auto flex flex-col gap-2 py-1 px-2" data-user="<%= session.userID %>">
+                <li
+                class="relative"                
+                >
+                <span 
+                class="block absolute size-3 skew-x-[30deg] bg-amber-300 top-0 -left-[.15rem] z-0"></span>
+                <div class="w-fit bg-amber-300 rounded-lg px-2 py-1 text-xs z-10 relative">
+                    <span>Hola mundo, desde chat</span>
+                </div>
+                <span class="text-xs text-gray-700">hace 2min</span>
+                </li>
+                <li
+                class="relative ml-auto"                
+                >
+                <span 
+                class="block absolute size-3 skew-x-[30deg] bg-amber-300 top-0 -left-[.15rem] z-0"></span>
+                <div class="w-fit bg-amber-300 rounded-lg px-2 py-1 text-xs z-10 relative">
+                    <span>Hola mundo, desde chat</span>
+                </div>
+                <span class="text-xs text-gray-700">hace 2min</span>
+                </li>
+            </ul>
         </div>
         <div class="flex">
             <input 
