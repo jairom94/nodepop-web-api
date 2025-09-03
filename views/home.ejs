@@ -54,13 +54,16 @@
         </section>
     </main>
     <%- include('partials/footer.ejs') %>
-    <div class="fixed flex flex-col p-2 z-50 w-[300px] h-[450px] right-0 bottom-0 bg-amber-300">
-        <div class="flex-1">
-            <ul class="users-online">
-
-            </ul>
-        </div>
-        <div class="bg-indigo-300 h-[300px] flex items-end">
+    <div class="chat-module fixed z-50 inset-0 grid grid-cols-[1fr_0px] transition-all duration-300 pointer-events-none">
+        <div class="flex justify-end items-end">
+            <div class="pointer-events-auto flex flex-col p-2 z-50 w-[300px] h-[350px] bg-amber-300">        
+                <div class="other-user py-1 px-2 bg-amber-500">
+                    <p class="flex gap-2 items-center">
+                        <span class="block size-[10px] bg-emerald-500 rounded-full"></span>
+                        <span>Otro usuario</span>    
+                    </p>
+                </div>
+                <div class="bg-indigo-300 h-[300px] flex items-end">            
             <ul class="messages flex-1 max-h-[300px] overflow-y-auto flex flex-col gap-2 py-1 px-2" data-user="<%= session.userID %>">
                 <li
                 class="relative"                
@@ -76,8 +79,8 @@
                 class="relative ml-auto"                
                 >
                 <span 
-                class="block absolute size-3 skew-x-[30deg] bg-amber-300 top-0 -left-[.15rem] z-0"></span>
-                <div class="w-fit bg-amber-300 rounded-lg px-2 py-1 text-xs z-10 relative">
+                class="block absolute size-3 skew-x-[-30deg] bg-amber-100 top-0 -right-[.15rem] z-0"></span>
+                <div class="w-fit bg-amber-100 rounded-lg px-2 py-1 text-xs z-10 relative">
                     <span>Hola mundo, desde chat</span>
                 </div>
                 <span class="text-xs text-gray-700">hace 2min</span>
@@ -94,7 +97,23 @@
                 </div>
             </button>
         </div>
+            </div>            
+        </div>
+        
+        <div class="bg-blue-200 pointer-events-auto relative">
+            <div class="absolute flex w-[20px] h-[100px] top-0 -left-[20px] bg-blue-400">
+                <button class="bnt-show-users bg-indigo-500 cursor-pointer flex-1 hover:bg-indigo-400 transition-colors duration-300">
+                    <div class="flex justify-center items-center text-white text-lg">
+                        <iconify-icon icon="solar:alt-arrow-left-bold"></iconify-icon>
+                    </div>
+                </button>
+            </div>            
+            <ul class="users-online">
+
+            </ul>
+        </div>
     </div>
+    
     </div>
     <script type="module" src="/js/hero.js"></script>
     <script src="/socket.io/socket.io.js"></script>    
